@@ -1,0 +1,14 @@
+---
+platform: linux
+
+inputs:
+  - name: branch-info   # type: keyval, with a 'branch_name' property
+  - name: repo          # type: git
+  - name: gk-automation # type: git
+
+params:
+  GIT_URI:
+  GITHUB_PRIVATE_KEY:
+
+run:
+  path: gk-automation/boshrelease/git-push.sh

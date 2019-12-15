@@ -1,0 +1,20 @@
+---
+platform: linux
+
+inputs:
+  - name: bosh-io-release # type: bosh-io-release
+  - name: repo            # type: git
+  - name: gk-automation   # type: git
+
+outputs:
+  - name: repo-bumped     # type: git
+  - name: bump-info       # type: keyval
+                          # props: 'latest_boshrelease_version', 'branch_name'
+
+params:
+  RELEASE_NAME:
+  MANIFEST_PATH:
+  BRANCH_NAME: master
+
+run:
+  path: gk-automation/boshrelease/depl-manifest-release-bump.sh
