@@ -2,7 +2,10 @@
 
 set -ueo pipefail
 
-find bosh-io-release -ls
+(
+    set -x
+    find bosh-io-release -ls
+)
 
 echo version: $(< bosh-io-release/version)
 echo url:     $(< bosh-io-release/url)
@@ -12,7 +15,10 @@ latest_boshrelease_version=$(< bosh-io-release/version)
 url=$(< bosh-io-release/url)
 sha1=$(< bosh-io-release/sha1)
 
-git clone "repo" "repo-bumped"
+(
+    set -x
+    git clone "repo" "repo-bumped"
+)
 
 pushd "repo-bumped" > /dev/null
     git checkout "${BRANCH_NAME}"
@@ -49,7 +55,10 @@ YAML
     git config --global "user.email" "((git_user_email))"
 
     git add .
-    git commit -m "Bump the '${RELEASE_NAME}' BOSH Release to version ${latest_boshrelease_version}"
+    (
+        set -x
+        git commit -m "Bump the '${RELEASE_NAME}' BOSH Release to version ${latest_boshrelease_version}"
+    )
 popd > /dev/null
 
 
