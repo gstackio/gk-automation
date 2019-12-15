@@ -14,6 +14,8 @@ outputs:
 params:
   RELEASE_NAME:
   MANIFEST_PATH:
+  GIT_EMAIL:
+  GIT_NAME:
   BRANCH_NAME: master
 
 run:

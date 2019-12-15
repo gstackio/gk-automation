@@ -51,8 +51,8 @@ YAML
     git status
     git diff | cat
 
-    git config --global "user.name" "((git_user_name))"
-    git config --global "user.email" "((git_user_email))"
+    git config --global "user.name" "${GIT_NAME}"
+    git config --global "user.email" "${GIT_EMAIL}"
 
     git add .
     (
