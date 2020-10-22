@@ -11,4 +11,4 @@ image_version_git_uri: git@github.com:gstackio/gk-pipelines-compass.git
 image_version_git_branch: master
 
 dockerhub_repo: gstack/gk-ops
-dockerhub_username: gk-concourse-ninja
+dockerhub_username: gkconcourseninja

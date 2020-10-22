@@ -117,7 +117,7 @@ resources:
     repository: yq
     access_token: ((github-access-token))
 
-- name: cf
+- name: cf-cli
   type: github-release
   source:
     user: cloudfoundry
@@ -153,7 +153,8 @@ resources:
     access_token: ((github-access-token))
 
 jobs:
-- name: build-gk-ops-image
+- name: build-image
+  old_name: build-gk-ops-image
   serial_groups: [ gk-ops-image ]
   plan:
   - in_parallel:
@@ -199,7 +200,7 @@ jobs:
       params: { globs: [ "*linux_amd64*" ] }
       trigger: true
       attempts: 3
-    - get: cf
+    - get: cf-cli
       params: { globs: [ "" ] }
       trigger: true
       attempts: 3
@@ -239,7 +240,7 @@ jobs:
       - name: spruce-cli
       - name: bosh-cli
       - name: yq
-      - name: cf
+      - name: cf-cli
       - name: tile-config-generator
       - name: cf-mgmt
       - name: bbr
@@ -267,9 +268,10 @@ jobs:
           wget -O /tmp/tf.zip "https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip"
           unzip -d workspace /tmp/tf.zip
 
-          wget -O /tmp/cf.tgz "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=$(cat cf/version)&source=github-rel"
+          cf_cli_version=$(cat cf-cli/version)
+          wget -O /tmp/cf.tgz "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${cf_cli_version}&source=github-rel"
           tar xzf /tmp/cf.tgz -C /tmp
-          cf_cli=$(find /tmp -maxdepth 1 -name "cf*" -executable)
+          cf_cli=$(find /tmp -maxdepth 1 -name "cf*" -type f -executable)
           cp "${cf_cli}" workspace/cf
 
           cp spruce-cli/spruce-* workspace/spruce
@@ -278,7 +280,7 @@ jobs:
           cp tile-config-generator/tile-config-generator-linux workspace/tile-config-generator
           
           cp cf-mgmt/cf-mgmt-linux workspace/cf-mgmt
-          cp bbr/bbr-*-linux-amd64 workspace/bbr
+          cp bbr/bbr-[0-9]*-linux-amd64 workspace/bbr
 
           tar xzf credhub-cli/credhub-linux-*.tgz -C /tmp
           cp /tmp/credhub workspace/credhub
@@ -293,12 +295,13 @@ jobs:
       load_base: cflinuxfs3-image
       build: workspace
 
-- name: test-gk-ops-image
+- name: test-image
+  old_name: test-gk-ops-image
   serial_groups: [ gk-ops-image ]
   plan:
   - get: gk-ops-image-rc
     trigger: true
-    passed: [ build-gk-ops-image ]
+    passed: [ build-image ]
     attempts: 3
     params:
       skip_download: true
@@ -343,7 +346,7 @@ jobs:
   serial_groups: [ gk-ops-image ]
   plan:
   - get: gk-ops-image-rc
-    passed: [ test-gk-ops-image ]
+    passed: [ test-image ]
     trigger: true
     attempts: 3
     params:
