@@ -1,0 +1,364 @@
+---
+# This is a stripped-down version of the image pipeline from the PCF-pipelines
+# project. Here customized for Gstack requirements.
+#
+# See: <https://github.com/pivotal-cf/pcf-pipelines/blob/master/ci/images/pipeline.yml>
+
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+
+resources:
+- name: image-version
+  type: semver
+  source:
+    initial_version: 1.0.0
+    driver: git
+    uri: ((image_version_git_uri))
+    branch: ((image_version_git_branch))
+    file: versions/gk-ops-image
+    private_key: ((github-private-key))
+    git_user: "((git-commit-name)) <((git-commit-email))>"
+    commit_message: "%file% updated to version %version%"
+
+- name: dockerfile-repo
+  type: git
+  source:
+    uri: ((git_uri))
+    branch: ((git_branch))
+    private_key: ((github-private-key))
+    paths: [ gk-ops-image/Dockerfile ]
+
+- name: gk-ops-image
+  type: docker-image
+  source:
+    repository: ((dockerhub_repo))
+    tag: latest
+    username: ((dockerhub_username))
+    password: ((dockerhub-password))
+
+- name: gk-ops-image-rc
+  type: docker-image
+  source:
+    repository: ((dockerhub_repo))
+    tag: release-candidate
+    username: ((dockerhub_username))
+    password: ((dockerhub-password))
+
+- name: cflinuxfs3-image
+  type: docker-image
+  source:
+    repository: cloudfoundry/cflinuxfs3
+    tag: latest
+
+- name: om-cli
+  type: github-release
+  source:
+    user: pivotal-cf
+    repository: om
+    access_token: ((github-access-token))
+
+- name: semver-cli # Small CLI to compare semvers written in Go
+  type: github-release
+  source:
+    user: christianang
+    repository: semver-cli
+    access_token: ((github-access-token))
+
+- name: pivnet-cli
+  type: github-release
+  source:
+    user: pivotal-cf
+    repository: pivnet-cli
+    access_token: ((github-access-token))
+
+- name: stemcell-downloader
+  type: github-release
+  source:
+    user: pivotal-cf
+    repository: pcf-product-stemcell-downloader
+    access_token: ((github-access-token))
+
+- name: terraform
+  type: github-release
+  source:
+    user: hashicorp
+    repository: terraform
+    access_token: ((github-access-token))
+
+- name: jq
+  type: github-release
+  source:
+    user: stedolan
+    repository: jq
+    access_token: ((github-access-token))
+
+- name: spruce-cli
+  type: github-release
+  source:
+    user: geofffranks
+    repository: spruce
+    access_token: ((github-access-token))
+
+- name: bosh-cli
+  type: github-release
+  source:
+    user: cloudfoundry
+    repository: bosh-cli
+    access_token: ((github-access-token))
+
+- name: yq
+  type: github-release
+  source:
+    user: mikefarah
+    repository: yq
+    access_token: ((github-access-token))
+
+- name: cf
+  type: github-release
+  source:
+    user: cloudfoundry
+    repository: cli
+    access_token: ((github-access-token))
+
+- name: tile-config-generator
+  type: github-release
+  source:
+    user: pivotalservices
+    repository: tile-config-generator
+    access_token: ((github-access-token))
+
+- name: cf-mgmt
+  type: github-release
+  source:
+    user: pivotalservices
+    repository: cf-mgmt
+    access_token: ((github-access-token))
+
+- name: credhub-cli
+  type: github-release
+  source:
+    user: cloudfoundry-incubator
+    repository: credhub-cli
+    access_token: ((github-access-token))
+
+- name: bbr
+  type: github-release
+  source:
+    user: cloudfoundry-incubator
+    repository: bosh-backup-and-restore
+    access_token: ((github-access-token))
+
+jobs:
+- name: build-gk-ops-image
+  serial_groups: [ gk-ops-image ]
+  plan:
+  - in_parallel:
+    - get: dockerfile-repo
+      trigger: true
+      attempts: 3
+    - get: cflinuxfs3-image
+      trigger: true
+      params: { save: true }
+      attempts: 3
+    - get: semver-cli
+      params: { globs: [ "*linux*" ] }
+      trigger: true
+      attempts: 3
+    - get: om-cli
+      params: { globs: [ "*linux*" ] }
+      trigger: true
+      attempts: 3
+    - get: pivnet-cli
+      params: { globs: [ "*linux*" ] }
+      trigger: true
+      attempts: 3
+    - get: stemcell-downloader
+      params: { globs: [ "*linux*" ] }
+      trigger: true
+      attempts: 3
+    - get: terraform
+      trigger: true
+      attempts: 3
+    - get: jq
+      params: { globs: [ "*linux64*" ] }
+      trigger: true
+      attempts: 3
+    - get: spruce-cli
+      params: { globs: [ "*linux*" ] }
+      trigger: true
+      attempts: 3
+    - get: bosh-cli
+      params: { globs: [ "*linux*" ] }
+      trigger: true
+      attempts: 3
+    - get: yq
+      params: { globs: [ "*linux_amd64*" ] }
+      trigger: true
+      attempts: 3
+    - get: cf
+      params: { globs: [ "" ] }
+      trigger: true
+      attempts: 3
+    - get: tile-config-generator
+      params: { globs: ["*linux*"] }
+      trigger: true
+      attempts: 3
+    - get: cf-mgmt
+      params: { globs: ["cf-mgmt-linux"] }
+      trigger: true
+      attempts: 3
+    - get: bbr
+      params: { globs: ["*linux-amd64*"] }
+      trigger: true
+      attempts: 3
+    - get: credhub-cli
+      params: { globs: [ "*linux*" ] }
+      trigger: true
+      attempts: 3
+
+  - task: prepare-workspace
+    attempts: 3
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: pcfnorm/rootfs
+      inputs:
+      - name: dockerfile-repo
+      - name: om-cli
+      - name: semver-cli
+      - name: pivnet-cli
+      - name: stemcell-downloader
+      - name: terraform
+      - name: jq
+      - name: spruce-cli
+      - name: bosh-cli
+      - name: yq
+      - name: cf
+      - name: tile-config-generator
+      - name: cf-mgmt
+      - name: bbr
+      - name: credhub-cli
+      outputs:
+      - name: workspace
+      run:
+        path: bash
+        args:
+        - -c
+        - |
+          set -eo pipefail -x
+          cp \
+             semver-cli/semver-linux \
+             workspace/semver
+          cp \
+            om-cli/om-linux-[0-9].[0-9].[0-9] \
+            workspace/om
+
+          cp jq/jq-* workspace/jq
+          cp pivnet-cli/pivnet-linux-* workspace/pivnet
+          cp stemcell-downloader/stemcell-downloader-linux workspace/stemcell-downloader
+
+          terraform_version=$(cat terraform/tag | awk '{print substr($1,2);}')
+          wget -O /tmp/tf.zip "https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip"
+          unzip -d workspace /tmp/tf.zip
+
+          wget -O /tmp/cf.tgz "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=$(cat cf/version)&source=github-rel"
+          tar xzf /tmp/cf.tgz -C /tmp
+          cf_cli=$(find /tmp -maxdepth 1 -name "cf*" -executable)
+          cp "${cf_cli}" workspace/cf
+
+          cp spruce-cli/spruce-* workspace/spruce
+          cp bosh-cli/bosh-* workspace/bosh
+          cp yq/yq_linux_amd64 workspace/yq
+          cp tile-config-generator/tile-config-generator-linux workspace/tile-config-generator
+          
+          cp cf-mgmt/cf-mgmt-linux workspace/cf-mgmt
+          cp bbr/bbr-*-linux-amd64 workspace/bbr
+
+          tar xzf credhub-cli/credhub-linux-*.tgz -C /tmp
+          cp /tmp/credhub workspace/credhub
+
+          chmod +x workspace/*
+
+          cp dockerfile-repo/gk-ops-image/Dockerfile workspace/
+
+  - put: gk-ops-image-rc
+    attempts: 3
+    params:
+      load_base: cflinuxfs3-image
+      build: workspace
+
+- name: test-gk-ops-image
+  serial_groups: [ gk-ops-image ]
+  plan:
+  - get: gk-ops-image-rc
+    trigger: true
+    passed: [ build-gk-ops-image ]
+    attempts: 3
+    params:
+      skip_download: true
+  - task: test-for-required-binaries
+    attempts: 3
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: ((dockerhub_repo))
+          tag: release-candidate
+      run:
+        path: sh
+        args:
+        - -c
+        - |
+          set -xe
+          which om
+          which semver
+          which cf
+          which pivnet
+          which stemcell-downloader
+          which jq
+          which terraform
+          which gem
+          which pip
+          which uaac
+          which az
+          which spruce
+          which bosh
+          which yq
+          which tile-config-generator
+          which cf-mgmt
+          which bbr
+          which lpass
+          which credhub
+          which certbot
+          test -x /opt/mssql-tools/bin/sqlcmd
+
+- name: promote-image
+  serial_groups: [ gk-ops-image ]
+  plan:
+  - get: gk-ops-image-rc
+    passed: [ test-gk-ops-image ]
+    trigger: true
+    attempts: 3
+    params:
+      save: true
+  - get: image-version
+    attempts: 3
+    params:
+      bump: patch
+  - put: gk-ops-image
+    attempts: 3
+    params:
+      load: gk-ops-image-rc
+      tag: image-version/version
+      tag_as_latest: true
+  - put: image-version
+    attempts: 3
+    params:
+      file: image-version/version
