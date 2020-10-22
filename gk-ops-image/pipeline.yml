@@ -327,18 +327,21 @@ jobs:
           which stemcell-downloader
           which jq
           which terraform
-          which gem
-          which pip
-          which uaac
-          which az
           which spruce
           which bosh
           which yq
           which tile-config-generator
           which cf-mgmt
           which bbr
-          which lpass
           which credhub
+          which gem
+          which pip
+          which uaac
+          which az
+          which sshuttle
+          which yamllint
+          which xmlstarlet
+          which lpass
           which certbot
           test -x /opt/mssql-tools/bin/sqlcmd
 
