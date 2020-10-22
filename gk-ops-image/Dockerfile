@@ -2,7 +2,7 @@ FROM cloudfoundry/cflinuxfs3
 
 COPY \
        om \
-       semver-linux \
+       semver \
        cf \
        pivnet \
        stemcell-downloader \
