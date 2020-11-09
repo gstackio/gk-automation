@@ -209,7 +209,7 @@ jobs:
       trigger: true
       attempts: 3
     - get: cf-mgmt
-      params: { globs: ["cf-mgmt-linux"] }
+      params: { globs: ["cf-mgmt*-linux"] }
       trigger: true
       attempts: 3
     - get: bbr
@@ -280,6 +280,7 @@ jobs:
           cp tile-config-generator/tile-config-generator-linux workspace/tile-config-generator
           
           cp cf-mgmt/cf-mgmt-linux workspace/cf-mgmt
+          cp cf-mgmt/cf-mgmt-config-linux workspace/cf-mgmt-config
           cp bbr/bbr-[0-9]*-linux-amd64 workspace/bbr
 
           tar xzf credhub-cli/credhub-linux-*.tgz -C /tmp
@@ -332,6 +333,7 @@ jobs:
           which yq
           which tile-config-generator
           which cf-mgmt
+          which cf-mgmt-config
           which bbr
           which credhub
           which gem

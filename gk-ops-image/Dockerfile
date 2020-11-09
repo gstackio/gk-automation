@@ -13,6 +13,7 @@ COPY \
        yq \
        tile-config-generator \
        cf-mgmt \
+       cf-mgmt-config \
        bbr \
        credhub \
        /usr/local/bin/
