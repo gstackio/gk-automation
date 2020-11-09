@@ -1,6 +1,6 @@
 ---
 pipeline_name: gk-ops-image
-team_name: main
+team_name: gk-plat-ops
 
 git_user_name: Gstack Concourse Ninja
 
