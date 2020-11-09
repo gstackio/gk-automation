@@ -3,12 +3,18 @@ platform: linux
 
 inputs:
   - name: branch-info   # type: keyval, with a 'branch_name' property
+    optional: true
   - name: repo          # type: git
   - name: gk-automation # type: git
 
 params:
   GIT_URI:
   GITHUB_PRIVATE_KEY:
+
+  BRANCH_NAME:
+  # Optional
+  # One of 'branch-info' resource of 'BRANCH_NAME' param must be specified.
+  # Takes precedence over the 'branch-info' resource.
 
 run:
   path: gk-automation/boshrelease/git-push.sh
