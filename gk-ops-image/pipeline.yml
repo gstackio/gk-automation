@@ -127,14 +127,14 @@ resources:
 - name: tile-config-generator
   type: github-release
   source:
-    user: pivotalservices
+    user: vmwarepivotallabs
     repository: tile-config-generator
     access_token: ((github-access-token))
 
 - name: cf-mgmt
   type: github-release
   source:
-    user: pivotalservices
+    user: vmwarepivotallabs
     repository: cf-mgmt
     access_token: ((github-access-token))
 
