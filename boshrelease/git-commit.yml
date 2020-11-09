@@ -14,4 +14,4 @@ params:
   GIT_COMMIT_MESSAGE:
 
 run:
-  path: gk-automation/boshrelease/git-push.sh
+  path: gk-automation/boshrelease/git-commit.sh
