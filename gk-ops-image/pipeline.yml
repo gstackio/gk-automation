@@ -320,32 +320,32 @@ jobs:
         args:
         - -c
         - |
-          set -xe
-          which om
-          which semver
-          which cf
-          which pivnet
+          set -xeo pipefail
+          which om                    && om version
+          which semver                && semver compare "7.7.7" "7.7.7"
+          which cf                    && cf version
+          which pivnet                && pivnet version
           which stemcell-downloader
-          which jq
-          which terraform
-          which spruce
-          which bosh
-          which yq
-          which tile-config-generator
-          which cf-mgmt
-          which cf-mgmt-config
-          which bbr
-          which credhub
-          which gem
-          which pip
-          which uaac
-          which az
+          which jq                    && jq --version
+          which terraform             && terraform version
+          which spruce                && spruce --version
+          which bosh                  && bosh --version | cat
+          which yq                    && yq --version
+          which tile-config-generator && tile-config-generator version
+          which cf-mgmt               && cf-mgmt        version
+          which cf-mgmt-config        && cf-mgmt-config version
+          which bbr                   && bbr version
+          which credhub               && credhub --version
+          which gem                   && gem --version
+          which pip                   && pip --version
+          which uaac                  && uaac version
+          which az                    && az version -o yaml
           which sshuttle
-          which yamllint
-          which xmlstarlet
-          which lpass
-          which certbot
-          test -x /opt/mssql-tools/bin/sqlcmd
+          which yamllint              && yamllint --version
+          which xmlstarlet            && xmlstarlet --version
+          which lpass                 && lpass --version
+          which certbot               && certbot --version
+          test -x /opt/mssql-tools/bin/sqlcmd && /opt/mssql-tools/bin/sqlcmd -? | grep -i ^version
 
 - name: promote-image
   serial_groups: [ gk-ops-image ]
