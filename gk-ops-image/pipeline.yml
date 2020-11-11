@@ -313,7 +313,7 @@ jobs:
           repository: ((dockerhub_repo))
           tag: release-candidate
       run:
-        path: sh
+        path: bash
         args:
         - -c
         - |
