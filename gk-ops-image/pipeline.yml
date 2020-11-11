@@ -223,12 +223,9 @@ jobs:
 
   - task: prepare-workspace
     attempts: 3
+    image: cflinuxfs3-image
     config:
       platform: linux
-      image_resource:
-        type: docker-image
-        source:
-          repository: pcfnorm/rootfs
       inputs:
       - name: dockerfile-repo
       - name: om-cli
