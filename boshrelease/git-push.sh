@@ -9,7 +9,7 @@ touch "${HOME}/.ssh/id_rsa"
 chmod 600 "${HOME}/.ssh/id_rsa"
 cat <<< "${GITHUB_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
 
-if [[ -n ${BRANCH_NAME} ]]
+if [[ -n ${BRANCH_NAME} ]]; then
     branch_name="${BRANCH_NAME}"
 elif [[ -f "branch-info/keyval.properties" ]]; then
     grep -vE "^(UPDATED|UUID)=" "branch-info/keyval.properties" \
