@@ -2,9 +2,7 @@
 
 set -ueo pipefail
 
-git clone "repo" "repo-committed"
-
-pushd "repo-committed" > /dev/null
+pushd "repo" > /dev/null
     git config --global "color.ui" "always"
     git status
     git diff | cat
@@ -19,3 +17,5 @@ pushd "repo-committed" > /dev/null
         git commit -m "${GIT_COMMIT_MESSAGE}"
     fi
 popd > /dev/null
+
+git clone "repo" "repo-committed"
