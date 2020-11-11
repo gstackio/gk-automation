@@ -301,17 +301,11 @@ jobs:
     trigger: true
     passed: [ build-image ]
     attempts: 3
-    params:
-      skip_download: true
   - task: test-for-required-binaries
     attempts: 3
+    image: gk-ops-image-rc
     config:
       platform: linux
-      image_resource:
-        type: docker-image
-        source:
-          repository: ((dockerhub_repo))
-          tag: release-candidate
       run:
         path: bash
         args:
