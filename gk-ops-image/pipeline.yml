@@ -164,7 +164,7 @@ jobs:
     - get: cflinuxfs3-image
       trigger: true
       params: { save: true }
-      attempts: 3
+      attempts: 1
     - get: semver-cli
       params: { globs: [ "*linux*" ] }
       trigger: true
@@ -288,7 +288,7 @@ jobs:
           cp dockerfile-repo/gk-ops-image/Dockerfile workspace/
 
   - put: gk-ops-image-rc
-    attempts: 3
+    attempts: 1
     params:
       load_base: cflinuxfs3-image
       build: workspace
@@ -300,7 +300,7 @@ jobs:
   - get: gk-ops-image-rc
     trigger: true
     passed: [ build-image ]
-    attempts: 3
+    attempts: 1
   - task: test-for-required-binaries
     attempts: 3
     image: gk-ops-image-rc
@@ -344,7 +344,7 @@ jobs:
   - get: gk-ops-image-rc
     passed: [ test-image ]
     trigger: true
-    attempts: 3
+    attempts: 1
     params:
       save: true
   - get: image-version
@@ -352,7 +352,7 @@ jobs:
     params:
       bump: patch
   - put: gk-ops-image
-    attempts: 3
+    attempts: 1
     params:
       load: gk-ops-image-rc
       tag: image-version/version
