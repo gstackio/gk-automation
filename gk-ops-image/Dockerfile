@@ -50,6 +50,9 @@ RUN \
 # pip
  apt-get -y install --no-install-recommends python-pip python-dev python-setuptools software-properties-common ruby-dev gnupg-agent && \
 \
+# git-lfs
+ apt-get -y install --no-install-recommends git-fls && \
+\
 # vim
  ln -s /usr/bin/vim.tiny /usr/local/bin/vim && \
 \
