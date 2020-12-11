@@ -15,7 +15,7 @@ credhub set -n "/concourse/${team}/git-commit-name"     -t value -v "$(bosh int 
 credhub set -n "/concourse/${team}/github-access-token" -t value -v "$(bosh int secrets.yml --path /github_access_token)"
 credhub set -n "/concourse/${team}/github-private-key"  -t value -v "$(bosh int secrets.yml --path /github_private_key)"
 
-credhub set -n "/concourse/${team}/dockerhub-password"  -t value -v "$(bosh int secrets.yml --path /dockerhub_password)"
+credhub set -n "/concourse/${team}/docker-registry-password"  -t value -v "$(bosh int secrets.yml --path /docker_registry_password)"
 
 # To delete all:
 #
