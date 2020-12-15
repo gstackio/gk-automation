@@ -16,6 +16,7 @@ COPY \
        cf-mgmt-config \
        bbr \
        credhub \
+       uaa \
        /usr/local/bin/
 
 RUN \

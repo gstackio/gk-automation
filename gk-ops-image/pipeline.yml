@@ -152,6 +152,13 @@ resources:
     repository: bosh-backup-and-restore
     access_token: ((github-access-token))
 
+- name: uaa-cli
+  type: github-release
+  source:
+    user: cloudfoundry-incubator
+    repository: uaa-cli
+    access_token: ((github-access-token))
+
 jobs:
 - name: build-image
   old_name: build-gk-ops-image
@@ -220,6 +227,10 @@ jobs:
       params: { globs: [ "*linux*" ] }
       trigger: true
       attempts: 3
+    - get: uaa-cli
+      params: { globs: [ "*linux-amd64*" ] }
+      trigger: true
+      attempts: 3
 
   - task: prepare-workspace
     attempts: 3
@@ -242,6 +253,7 @@ jobs:
       - name: cf-mgmt
       - name: bbr
       - name: credhub-cli
+      - name: uaa-cli
       outputs:
       - name: workspace
       run:
@@ -282,6 +294,8 @@ jobs:
 
           tar xzf credhub-cli/credhub-linux-*.tgz -C /tmp
           cp /tmp/credhub workspace/credhub
+
+          cp uaa-cli/uaa-* workspace/uaa
 
           chmod +x workspace/*
 
@@ -327,6 +341,7 @@ jobs:
           which cf-mgmt-config        && cf-mgmt-config version
           which bbr                   && bbr version
           which credhub               && credhub --version
+          which uaa                   && uaa version
           which gem                   && gem --version
           which pip                   && pip --version
           which uaac                  && uaac version
