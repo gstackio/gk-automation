@@ -54,6 +54,9 @@ RUN \
 # git-lfs
  apt-get -y install --no-install-recommends git-lfs && \
 \
+# pigz: Parallel Implementation of GZip
+ apt-get -y install --no-install-recommends pigz && \
+\
 # vim
  ln -s /usr/bin/vim.tiny /usr/local/bin/vim && \
 \
