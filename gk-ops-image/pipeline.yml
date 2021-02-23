@@ -159,6 +159,20 @@ resources:
     repository: uaa-cli
     access_token: ((github-access-token))
 
+- name: carvel-ytt-cli
+  type: github-release
+  source:
+    user: vmware-tanzu
+    repository: carvel-ytt
+    access_token: ((github-access-token))
+
+- name: carvel-kapp-cli
+  type: github-release
+  source:
+    user: vmware-tanzu
+    repository: carvel-kapp
+    access_token: ((github-access-token))
+
 jobs:
 - name: build-image
   old_name: build-gk-ops-image
@@ -231,6 +245,14 @@ jobs:
       params: { globs: [ "*linux-amd64*" ] }
       trigger: true
       attempts: 3
+    - get: carvel-ytt-cli
+      params: { globs: [ "*linux-amd64*" ] }
+      trigger: true
+      attempts: 3
+    - get: carvel-kapp-cli
+      params: { globs: [ "*linux-amd64*" ] }
+      trigger: true
+      attempts: 3
 
   - task: prepare-workspace
     attempts: 3
@@ -254,6 +276,8 @@ jobs:
       - name: bbr
       - name: credhub-cli
       - name: uaa-cli
+      - name: carvel-ytt-cli
+      - name: carvel-kapp-cli
       outputs:
       - name: workspace
       run:
@@ -296,6 +320,9 @@ jobs:
           cp /tmp/credhub workspace/credhub
 
           cp uaa-cli/uaa-* workspace/uaa
+
+          cp carvel-ytt-cli/ytt-*   workspace/ytt
+          cp carvel-kapp-cli/kapp-* workspace/kapp
 
           chmod +x workspace/*
 
@@ -352,6 +379,8 @@ jobs:
           which lpass                 && lpass --version
           which certbot               && certbot --version
           test -x /opt/mssql-tools/bin/sqlcmd && /opt/mssql-tools/bin/sqlcmd -? | grep -i ^version
+          which ytt                   && ytt --version
+          which kapp                  && kapp --version
 
 - name: promote-image
   serial_groups: [ gk-ops-image ]
