@@ -303,12 +303,12 @@ jobs:
 
   - put: gk-ops-image-rc
     attempts: 1
+    inputs: [ workspace ]
     params:
       load_base: cflinuxfs3-image
       build: workspace
 
 - name: test-image
-  old_name: test-gk-ops-image
   serial_groups: [ gk-ops-image ]
   plan:
   - get: gk-ops-image-rc
@@ -356,16 +356,15 @@ jobs:
 - name: promote-image
   serial_groups: [ gk-ops-image ]
   plan:
-  - get: gk-ops-image-rc
-    passed: [ test-image ]
-    trigger: true
-    attempts: 1
-    params:
-      save: true
-  - get: image-version
-    attempts: 3
-    params:
-      bump: patch
+  - in_parallel:
+    - get: gk-ops-image-rc
+      passed: [ test-image ]
+      trigger: true
+      attempts: 1
+      params: { save: true }
+    - get: image-version
+      attempts: 3
+      params: { bump: patch }
   - put: gk-ops-image
     attempts: 1
     params:
