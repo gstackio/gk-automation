@@ -17,6 +17,8 @@ COPY \
        bbr \
        credhub \
        uaa \
+       ytt \
+       kapp \
        /usr/local/bin/
 
 RUN \
