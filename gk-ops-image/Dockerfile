@@ -95,6 +95,9 @@ RUN \
  ACCEPT_EULA="Y" apt-get -y install --no-install-recommends msodbcsql17 mssql-tools && \
  echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile && \
  echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc && \
+\
+# envsubst
+ apt-get -y install --no-install-recommends "gettext-base" && \
  \
 # Clean up
  apt-get remove -y python-dev apt-transport-https && \
