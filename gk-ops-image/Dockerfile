@@ -22,6 +22,11 @@ COPY \
        /usr/local/bin/
 
 RUN \
+# Remove unnecessary packages with CVEs reported by our Clair image scanning in Harbor
+ apt-get -y remove --purge "subversion" "libaudiofile1" "libwebp6" "mercurial" "imagemagick" "libopenjp2-7" && \
+ apt-get -y autoremove --purge
+
+RUN \
 \
 # Install the add-apt-repository CLI
  apt-get update -qq && \
