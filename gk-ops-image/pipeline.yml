@@ -321,7 +321,7 @@ jobs:
 
           cp uaa-cli/uaa-* workspace/uaa
 
-          cp carvel-ytt-cli/ytt-*   workspace/ytt
+          cp carvel-ytt-cli/ytt-* workspace/ytt
           cp carvel-kapp-cli/kapp-* workspace/kapp
 
           chmod +x workspace/*
@@ -330,7 +330,7 @@ jobs:
 
   - put: gk-ops-image-rc
     attempts: 1
-    inputs: [ workspace ]
+    inputs: detect
     params:
       load_base: cflinuxfs3-image
       build: workspace
