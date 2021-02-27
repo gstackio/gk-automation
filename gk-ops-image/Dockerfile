@@ -19,6 +19,7 @@ COPY \
        uaa \
        ytt \
        kapp \
+       dnscontrol \
        /usr/local/bin/
 
 RUN \

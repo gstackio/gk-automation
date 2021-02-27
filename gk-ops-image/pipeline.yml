@@ -173,6 +173,13 @@ resources:
     repository: carvel-kapp
     access_token: ((github-access-token))
 
+- name: dnscontrol-cli
+  type: github-release
+  source:
+    user: StackExchange
+    repository: dnscontrol
+    access_token: ((github-access-token))
+
 jobs:
 - name: build-image
   old_name: build-gk-ops-image
@@ -253,6 +260,10 @@ jobs:
       params: { globs: [ "*linux-amd64*" ] }
       trigger: true
       attempts: 3
+    - get: dnscontrol-cli
+      params: { globs: [ "*-Linux*" ] }
+      trigger: true
+      attempts: 3
 
   - task: prepare-workspace
     attempts: 3
@@ -278,6 +289,7 @@ jobs:
       - name: uaa-cli
       - name: carvel-ytt-cli
       - name: carvel-kapp-cli
+      - name: dnscontrol-cli
       outputs:
       - name: workspace
       run:
@@ -323,6 +335,8 @@ jobs:
 
           cp carvel-ytt-cli/ytt-* workspace/ytt
           cp carvel-kapp-cli/kapp-* workspace/kapp
+
+          cp dnscontrol-cli/dnscontrol-* workspace/dnscontrol
 
           chmod +x workspace/*
 
@@ -381,6 +395,7 @@ jobs:
           test -x /opt/mssql-tools/bin/sqlcmd && /opt/mssql-tools/bin/sqlcmd -? | grep -i ^version
           which ytt                   && ytt --version
           which kapp                  && kapp --version
+          which dnscontrol            && dnscontrol version
 
 - name: promote-image
   serial_groups: [ gk-ops-image ]
