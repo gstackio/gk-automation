@@ -89,8 +89,8 @@ RUN \
  apt-get -y install --no-install-recommends "golang-1.13"
 
 ENV GOROOT="/usr/lib/go-1.13"
-ENV GOPATH="/tmp/gopath"
-ENV PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
+ENV GOPATH="/usr/local"
+ENV PATH="${GOROOT}/bin:${PATH}"
 RUN \
 # Ginkgo
 #  go get github.com/onsi/ginkgo/ginkgo && \
