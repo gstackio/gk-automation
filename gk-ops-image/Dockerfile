@@ -100,6 +100,20 @@ RUN \
 # envsubst
  apt-get -y install --no-install-recommends "gettext-base" && \
  \
+# Golang
+ apt-get -y install --no-install-recommends "golang-1.13"
+
+ENV GOROOT="/usr/lib/go-1.13"
+ENV GOPATH="/tmp/gopath"
+ENV PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
+RUN \
+# Ginkgo
+#  go get github.com/onsi/ginkgo/ginkgo && \
+#  go get github.com/onsi/gomega/... && \
+# vars-to-credhub
+ go get github.com/vmware-tanzu-labs/vars-to-credhub
+
+RUN \
 # Clean up
  apt-get remove -y python-dev apt-transport-https && \
  apt-get -y clean && apt-get -y autoremove --purge && \

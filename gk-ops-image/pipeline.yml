@@ -396,6 +396,7 @@ jobs:
           which ytt                   && ytt --version
           which kapp                  && kapp --version
           which dnscontrol            && dnscontrol version
+          which vars-to-credhub       && vars-to-credhub --help
 
 - name: promote-image
   serial_groups: [ gk-ops-image ]
