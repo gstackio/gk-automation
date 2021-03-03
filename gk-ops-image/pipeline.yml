@@ -383,13 +383,16 @@ jobs:
           which bbr                   && bbr version
           which credhub               && credhub --version
           which uaa                   && uaa version
-          which gem                   && gem --version
-          which pip                   && pip --version
-          which uaac                  && uaac version
-          which az                    && az version -o yaml
           which ytt                   && ytt --version
           which kapp                  && kapp --version
           which dnscontrol            && dnscontrol version
+
+          which pip                   && pip --version
+          which gem                   && gem --version
+          which uaac                  && uaac version
+          which az                    && az version -o yaml
+          which envsubst              && envsubst --version
+          which go                    && go version
           which vars-to-credhub       && vars-to-credhub --help
 
 - name: promote-image
