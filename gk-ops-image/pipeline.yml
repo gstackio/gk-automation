@@ -387,12 +387,6 @@ jobs:
           which pip                   && pip --version
           which uaac                  && uaac version
           which az                    && az version -o yaml
-          which sshuttle
-          which yamllint              && yamllint --version
-          which xmlstarlet            && xmlstarlet --version
-          which lpass                 && lpass --version
-          which certbot               && certbot --version
-          test -x /opt/mssql-tools/bin/sqlcmd && /opt/mssql-tools/bin/sqlcmd -? | grep -i ^version
           which ytt                   && ytt --version
           which kapp                  && kapp --version
           which dnscontrol            && dnscontrol version
