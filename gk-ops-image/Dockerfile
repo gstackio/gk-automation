@@ -27,6 +27,9 @@ RUN \
  apt-get -y remove --purge "subversion" "libaudiofile1" "libwebp6" "mercurial" "imagemagick" "libopenjp2-7" && \
  apt-get -y autoremove --purge
 
+# When in need for man pages, we may stop excluding them
+#RUN rm /etc/dpkg/dpkg.cfg.d/excludes
+
 RUN \
 \
 # Install the add-apt-repository CLI
@@ -57,7 +60,7 @@ RUN \
 \
 \
 # pip
- apt-get -y install --no-install-recommends python-pip python-dev python-setuptools software-properties-common ruby-dev gnupg-agent && \
+ apt-get -y install --no-install-recommends python-pip python-dev python-setuptools && \
 \
 # git-lfs
  apt-get -y install --no-install-recommends git-lfs && \
@@ -69,6 +72,7 @@ RUN \
  ln -s /usr/bin/vim.tiny /usr/local/bin/vim && \
 \
 # UAA Client
+ apt-get -y install --no-install-recommends "ruby-dev" && \
  gem install cf-uaac --no-ri --no-rdoc && \
 \
 # Ensure latest version of six
@@ -77,25 +81,6 @@ RUN \
 # Azure Client
  apt-get -y install --no-install-recommends apt-transport-https && \
  apt-get -y install --no-install-recommends azure-cli && \
-\
-# sshuttle
- pip install sshuttle && \
-# ApacheBenchmark
- apt-get -y install --no-install-recommends apache2-utils && \
-\
-# YAML & XML tools: yamllint & xmlstarlet
- apt-get -y install --no-install-recommends yamllint xmlstarlet && \
-\
-# lpass
- apt-get -y install --no-install-recommends lastpass-cli && \
-\
-# certbot
- apt-get -y install --no-install-recommends certbot && \
-\
-# sqlcmd
- ACCEPT_EULA="Y" apt-get -y install --no-install-recommends msodbcsql17 mssql-tools && \
- echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile && \
- echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc && \
 \
 # envsubst
  apt-get -y install --no-install-recommends "gettext-base" && \
