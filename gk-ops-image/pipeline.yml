@@ -53,6 +53,8 @@ resources:
   source:
     repository: cloudfoundry/cflinuxfs3
     tag: latest
+    username: ((dockerhub_username))
+    password: ((dockerhub-password))
 
 - name: om-cli
   type: github-release
