@@ -2,6 +2,18 @@
 
 set -ueo pipefail
 
+if [[ -n ${GIT_COMMIT_MESSAGE} ]]; then
+    commit_message="${GIT_COMMIT_MESSAGE}"
+elif [[ -f "commit-info/keyval.properties" ]]; then
+    grep -vE "^(UPDATED|UUID)=" "commit-info/keyval.properties" \
+        | sed -r -e 's/"/\"/g; s/=(.*)$/="\1"/' \
+        > keyval.inc.bash
+    source "keyval.inc.bash"
+else
+    echo "ERROR: no 'commit-info' resource, and no 'GIT_COMMIT_MESSAGE' param. One must be specified. Aborting." >&2
+    exit 2
+fi
+
 pushd "repo" > /dev/null
     git config --global "color.ui" "always"
     git status
@@ -14,7 +26,7 @@ pushd "repo" > /dev/null
         echo "INFO: nothing to commit. Skipping."
     else
         git add .
-        git commit -m "${GIT_COMMIT_MESSAGE}"
+        git commit -m "${commit_message}"
     fi
 popd > /dev/null
 

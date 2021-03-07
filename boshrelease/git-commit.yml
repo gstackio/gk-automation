@@ -8,6 +8,8 @@ image_resource:
 inputs:
   - name: repo          # type: git
   - name: gk-automation # type: git
+  - name: commit-info   # type: keyval, with a 'commit_message' property
+    optional: true
 
 outputs:
   - name: repo-committed
@@ -15,7 +17,11 @@ outputs:
 params:
   GIT_COMMIT_NAME:
   GIT_COMMIT_EMAIL:
+
   GIT_COMMIT_MESSAGE:
+  # Optional
+  # One of 'commit-info' resource of 'GIT_COMMIT_MESSAGE' param must be
+  # specified. Takes precedence over the 'commit-info' resource.
 
 run:
   path: gk-automation/boshrelease/git-commit.sh
