@@ -1,6 +1,10 @@
 ---
 platform: linux
 
+image_resource:
+  type: registry-image
+  source: { repository: gstack/gk-ops }
+
 inputs:
   - name: branch-info   # type: keyval, with a 'branch_name' property
     optional: true

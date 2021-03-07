@@ -1,6 +1,10 @@
 ---
 platform: linux
 
+image_resource:
+  type: registry-image
+  source: { repository: gstack/gk-ops }
+
 inputs:
   - name: bosh-io-release # type: bosh-io-release
   - name: repo            # type: git

@@ -1,6 +1,10 @@
 ---
 platform: linux
 
+image_resource:
+  type: registry-image
+  source: { repository: gstack/gk-ops }
+
 inputs:
   - name: repo          # type: git
   - name: gk-automation # type: git
