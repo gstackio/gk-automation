@@ -418,6 +418,8 @@ jobs:
           which envsubst              && envsubst --version
           which go                    && go version
           which vars-to-credhub       && vars-to-credhub --help
+          which yasak                 && yasak --help
+          which update-yaml-value     && update-yaml-value <(echo plip: "plop") "/plip" "bim"
 
 - name: promote-image
   serial_groups: [ gk-ops-image ]
