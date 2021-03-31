@@ -14,7 +14,9 @@ else
     exit 2
 fi
 
-pushd "repo" > /dev/null
+git clone "repo" "repo-committed"
+
+pushd "repo-committed" > /dev/null
     git config "color.ui" "always"
     git status
     git diff | cat
@@ -29,5 +31,3 @@ pushd "repo" > /dev/null
         git commit -m "${commit_message}"
     fi
 popd > /dev/null
-
-git clone "repo" "repo-committed"
