@@ -15,12 +15,12 @@ else
 fi
 
 pushd "repo" > /dev/null
-    git config --global "color.ui" "always"
+    git config "color.ui" "always"
     git status
     git diff | cat
 
-    git config --global "user.name" "${GIT_COMMIT_NAME}"
-    git config --global "user.email" "${GIT_COMMIT_EMAIL}"
+    git config "user.name" "${GIT_COMMIT_NAME}"
+    git config "user.email" "${GIT_COMMIT_EMAIL}"
 
     if [[ -z "$(git status --porcelain)" ]]; then
         echo "INFO: nothing to commit. Skipping."
