@@ -96,7 +96,13 @@ RUN \
 #  go get github.com/onsi/ginkgo/ginkgo && \
 #  go get github.com/onsi/gomega/... && \
 # vars-to-credhub
- go get github.com/vmware-tanzu-labs/vars-to-credhub
+ go get "github.com/vmware-tanzu-labs/vars-to-credhub" && \
+# Yasak
+ go get "github.com/gstackio/yasak" && \
+# update-yaml-value
+ yasak_dir="${GOPATH}/src/github.com/gstackio/yasak" && \
+ sed -i 's|sed -e|sed -i -e|' "${yasak_dir}/example-edit-value.sh" && \
+ cp "${yasak_dir}/example-edit-value.sh" "/usr/local/bin/update-yaml-value"
 
 RUN \
 # Clean up
