@@ -26,6 +26,8 @@ pushd "repo" > /dev/null
     ssh-keyscan -t "rsa" "bitbucket.org" "github.com"    2> /dev/null >> "${HOME}/.ssh/known_hosts"
     (
         set -x
+        git fetch "origin"
+        git pull --rebase "origin" "${branch_name}"
         git push --set-upstream "origin" "${branch_name}"
     )
 popd > /dev/null
