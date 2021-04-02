@@ -419,7 +419,9 @@ jobs:
           which go                    && go version
           which vars-to-credhub       && vars-to-credhub --help
           which yasak                 && yasak --help
-          which update-yaml-value     && update-yaml-value <(echo plip: "plop") "/plip" "bim"
+
+          echo plip: "plop" > dummy.yml
+          which update-yaml-value     && update-yaml-value "dummy.yml" "/plip" "bim"
 
 - name: promote-image
   serial_groups: [ gk-ops-image ]
