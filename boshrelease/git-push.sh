@@ -27,7 +27,11 @@ pushd "repo" > /dev/null
     (
         set -x
         git fetch "origin"
-        git pull --rebase "origin" "${branch_name}"
+        rebase_args=()
+        if [[ -n $(git branch --remotes --list "origin/${branch_name}") ]]; then
+            rebase_args+=("--rebase")
+        fi
+        git pull "${rebase_args[@]}" "origin" "${branch_name}"
         git push --set-upstream "origin" "${branch_name}"
     )
 popd > /dev/null
