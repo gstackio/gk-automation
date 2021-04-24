@@ -28,7 +28,10 @@ pushd "repo" > /dev/null
         set -x
         git fetch "origin"
         rebase_args=()
-        if [[ -n $(git branch --remotes --list "origin/${branch_name}") ]]; then
+        if [[ -n $(git branch --remotes \
+                    --contains "$(git rev-parse --short "HEAD")" \
+                    --list "origin/${branch_name}"
+                ) ]]; then
             rebase_args+=("--rebase")
         fi
         git pull "${rebase_args[@]}" "origin" "${branch_name}"
