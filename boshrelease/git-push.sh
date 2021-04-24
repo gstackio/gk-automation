@@ -22,19 +22,23 @@ else
 fi
 
 pushd "repo" > /dev/null
-    git remote set-url "origin" "${GIT_URI}"
-    ssh-keyscan -t "rsa" "bitbucket.org" "github.com"    2> /dev/null >> "${HOME}/.ssh/known_hosts"
+    if git remote | grep -q '^origin$'; then
+        git remote remove "origin"
+    fi
+    git remote add "origin" "${GIT_URI}"
+    ssh-keyscan -t "rsa" "bitbucket.org" "github.com" 2> /dev/null >> "${HOME}/.ssh/known_hosts"
     (
         set -x
         git fetch "origin"
-        rebase_args=()
-        if [[ -n $(git branch --remotes \
-                    --contains "$(git rev-parse --short "HEAD")" \
-                    --list "origin/${branch_name}"
-                ) ]]; then
-            rebase_args+=("--rebase")
-        fi
-        git pull "${rebase_args[@]}" "origin" "${branch_name}"
+    )
+    if [[ -n $(git branch --remotes --list "origin/${branch_name}") ]]; then
+        (
+            set -x
+            git pull --rebase "origin" "${branch_name}"
+        )
+    fi
+    (
+        set -x
         git push --set-upstream "origin" "${branch_name}"
     )
 popd > /dev/null
