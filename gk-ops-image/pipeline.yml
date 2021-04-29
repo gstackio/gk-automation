@@ -131,6 +131,14 @@ resources:
     repository: yq
     access_token: ((github-access-token))
 
+- name: yasak-cli
+  type: github-release
+  check_every: 24h
+  source:
+    user: gstackio
+    repository: yasak
+    access_token: ((github-access-token))
+
 - name: cf-cli
   type: github-release
   check_every: 24h
@@ -251,6 +259,10 @@ jobs:
       params: { globs: [ "*linux_amd64*" ] }
       trigger: true
       attempts: 3
+    - get: yasak-cli
+      params: { globs: [ "*linux-amd64*" ] }
+      trigger: true
+      attempts: 3
     - get: cf-cli
       params: { globs: [ "" ] }
       trigger: true
@@ -313,6 +325,7 @@ jobs:
       - name: carvel-ytt-cli
       - name: carvel-kapp-cli
       - name: dnscontrol-cli
+      - name: yasak-cli
       outputs:
       - name: workspace
       run:
@@ -360,6 +373,13 @@ jobs:
           cp carvel-kapp-cli/kapp-* workspace/kapp
 
           cp dnscontrol-cli/dnscontrol-* workspace/dnscontrol
+
+          cp yasak-cli/yasak-* workspace/yasak
+
+          curl --silent --fail --show-error --location --remote-name \
+              https://raw.githubusercontent.com/gstackio/yasak/master/example-edit-value.sh
+          sed -i 's|sed -e|sed -i -e|' "example-edit-value.sh"
+          cp "example-edit-value.sh" "workspace/update-yaml-value"
 
           chmod +x workspace/*
 
@@ -417,7 +437,7 @@ jobs:
           which envsubst              && envsubst --version
           which go                    && go version
           which vars-to-credhub       && vars-to-credhub --help
-          which yasak                 && yasak --help
+          which yasak                 && yasak --version
 
           echo plip: "plop" > dummy.yml
           which update-yaml-value     && update-yaml-value "dummy.yml" "/plip" "bim"
