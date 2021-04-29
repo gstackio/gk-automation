@@ -21,6 +21,7 @@ COPY \
        kapp \
        dnscontrol \
        yasak \
+       update-yaml-value \
        /usr/local/bin/
 
 RUN \

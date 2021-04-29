@@ -131,14 +131,6 @@ resources:
     repository: yq
     access_token: ((github-access-token))
 
-- name: yasak-cli
-  type: github-release
-  check_every: 24h
-  source:
-    user: gstackio
-    repository: yasak
-    access_token: ((github-access-token))
-
 - name: cf-cli
   type: github-release
   check_every: 24h
@@ -211,6 +203,14 @@ resources:
     repository: dnscontrol
     access_token: ((github-access-token))
 
+- name: yasak-cli
+  type: github-release
+  check_every: 24h
+  source:
+    user: gstackio
+    repository: yasak
+    access_token: ((github-access-token))
+
 jobs:
 - name: build-image
   old_name: build-gk-ops-image
@@ -259,10 +259,6 @@ jobs:
       params: { globs: [ "*linux_amd64*" ] }
       trigger: true
       attempts: 3
-    - get: yasak-cli
-      params: { globs: [ "*linux-amd64*" ] }
-      trigger: true
-      attempts: 3
     - get: cf-cli
       params: { globs: [ "" ] }
       trigger: true
@@ -297,6 +293,10 @@ jobs:
       attempts: 3
     - get: dnscontrol-cli
       params: { globs: [ "*-Linux*" ] }
+      trigger: true
+      attempts: 3
+    - get: yasak-cli
+      params: { globs: [ "*linux-amd64*" ] }
       trigger: true
       attempts: 3
 
