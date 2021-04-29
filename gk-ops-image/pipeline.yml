@@ -37,19 +37,18 @@ resources:
   type: docker-image
   check_every: 1h
   source:
-    repository: ((docker_registry_repo))
     tag: latest
-    username: ((docker_registry_username))
-    password: ((docker-registry-password))
+    <<: &gk_ops_image_params
+      repository: ((docker_registry_repo))
+      username:   ((docker_registry_username))
+      password:   ((docker-registry-password))
 
 - name: gk-ops-image-rc
   type: docker-image
   check_every: 1h
   source:
-    repository: ((docker_registry_repo))
     tag: release-candidate
-    username: ((docker_registry_username))
-    password: ((docker-registry-password))
+    <<: *gk_ops_image_params
 
 - name: cflinuxfs3-image
   type: docker-image
