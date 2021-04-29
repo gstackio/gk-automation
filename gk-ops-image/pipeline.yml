@@ -14,7 +14,7 @@ resource_types:
 resources:
 - name: image-version
   type: semver
-  check_every: 1h
+  check_every: 24h
   source:
     initial_version: 1.0.0
     driver: git
@@ -35,7 +35,7 @@ resources:
 
 - name: gk-ops-image
   type: docker-image
-  check_every: 1h
+  check_every: 24h
   source:
     tag: latest
     <<: &gk_ops_image_params
@@ -45,14 +45,14 @@ resources:
 
 - name: gk-ops-image-rc
   type: docker-image
-  check_every: 1h
+  check_every: 24h
   source:
     tag: release-candidate
     <<: *gk_ops_image_params
 
 - name: cflinuxfs3-image
   type: docker-image
-  check_every: 1h
+  check_every: 24h
   source:
     repository: cloudfoundry/cflinuxfs3
     tag: latest
@@ -61,7 +61,7 @@ resources:
 
 - name: om-cli
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: pivotal-cf
     repository: om
@@ -69,7 +69,7 @@ resources:
 
 - name: semver-cli # Small CLI to compare semvers written in Go
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: christianang
     repository: semver-cli
@@ -77,7 +77,7 @@ resources:
 
 - name: pivnet-cli
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: pivotal-cf
     repository: pivnet-cli
@@ -85,7 +85,7 @@ resources:
 
 - name: stemcell-downloader
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: pivotal-cf
     repository: pcf-product-stemcell-downloader
@@ -93,7 +93,7 @@ resources:
 
 - name: terraform
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: hashicorp
     repository: terraform
@@ -101,7 +101,7 @@ resources:
 
 - name: jq
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: stedolan
     repository: jq
@@ -109,7 +109,7 @@ resources:
 
 - name: spruce-cli
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: geofffranks
     repository: spruce
@@ -117,7 +117,7 @@ resources:
 
 - name: bosh-cli
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: cloudfoundry
     repository: bosh-cli
@@ -125,7 +125,7 @@ resources:
 
 - name: yq
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: mikefarah
     repository: yq
@@ -133,7 +133,7 @@ resources:
 
 - name: cf-cli
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: cloudfoundry
     repository: cli
@@ -141,7 +141,7 @@ resources:
 
 - name: tile-config-generator
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: vmwarepivotallabs
     repository: tile-config-generator
@@ -149,7 +149,7 @@ resources:
 
 - name: cf-mgmt
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: vmwarepivotallabs
     repository: cf-mgmt
@@ -157,7 +157,7 @@ resources:
 
 - name: credhub-cli
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: cloudfoundry-incubator
     repository: credhub-cli
@@ -165,7 +165,7 @@ resources:
 
 - name: bbr
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: cloudfoundry-incubator
     repository: bosh-backup-and-restore
@@ -173,7 +173,7 @@ resources:
 
 - name: uaa-cli
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: cloudfoundry-incubator
     repository: uaa-cli
@@ -181,7 +181,7 @@ resources:
 
 - name: carvel-ytt-cli
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: vmware-tanzu
     repository: carvel-ytt
@@ -189,7 +189,7 @@ resources:
 
 - name: carvel-kapp-cli
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: vmware-tanzu
     repository: carvel-kapp
@@ -197,7 +197,7 @@ resources:
 
 - name: dnscontrol-cli
   type: github-release
-  check_every: 1h
+  check_every: 24h
   source:
     user: StackExchange
     repository: dnscontrol
