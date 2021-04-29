@@ -211,6 +211,14 @@ resources:
     repository: yasak
     access_token: ((github-access-token))
 
+- name: vars-to-credhub-cli
+  type: github-release
+  check_every: 24h
+  source:
+    user: gstackio
+    repository: vars-to-credhub
+    access_token: ((github-access-token))
+
 jobs:
 - name: build-image
   old_name: build-gk-ops-image
@@ -299,6 +307,10 @@ jobs:
       params: { globs: [ "*linux-amd64*" ] }
       trigger: true
       attempts: 3
+    - get: vars-to-credhub-cli
+      params: { globs: [ "*linux-amd64*" ] }
+      trigger: true
+      attempts: 3
 
   - task: prepare-workspace
     attempts: 3
@@ -326,6 +338,7 @@ jobs:
       - name: carvel-kapp-cli
       - name: dnscontrol-cli
       - name: yasak-cli
+      - name: vars-to-credhub-cli
       outputs:
       - name: workspace
       run:
@@ -380,6 +393,8 @@ jobs:
               https://raw.githubusercontent.com/gstackio/yasak/master/example-edit-value.sh
           sed -i 's|sed -e|sed -i -e|' "example-edit-value.sh"
           cp "example-edit-value.sh" "workspace/update-yaml-value"
+
+          cp vars-to-credhub-cli/vars-to-credhub-* workspace/vars-to-credhub
 
           chmod +x workspace/*
 
@@ -441,6 +456,8 @@ jobs:
 
           echo plip: "plop" > dummy.yml
           which update-yaml-value     && update-yaml-value "dummy.yml" "/plip" "bim"
+
+          which vars-to-credhub       && vars-to-credhub --version
 
 - name: promote-image
   serial_groups: [ gk-ops-image ]

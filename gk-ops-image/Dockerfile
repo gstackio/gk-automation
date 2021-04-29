@@ -22,6 +22,7 @@ COPY \
        dnscontrol \
        yasak \
        update-yaml-value \
+       vars-to-credhub \
        /usr/local/bin/
 
 RUN \
@@ -85,20 +86,18 @@ RUN \
  apt-get -y install --no-install-recommends azure-cli && \
 \
 # envsubst
- apt-get -y install --no-install-recommends "gettext-base" && \
- \
-# Golang
- apt-get -y install --no-install-recommends "golang-1.13"
+ apt-get -y install --no-install-recommends "gettext-base"
 
-ENV GOROOT="/usr/lib/go-1.13"
-ENV GOPATH="/usr/local"
-ENV PATH="${GOROOT}/bin:${PATH}"
-RUN \
+# # Golang
+#  apt-get -y install --no-install-recommends "golang-1.13"
+
+# ENV GOROOT="/usr/lib/go-1.13"
+# ENV GOPATH="/usr/local"
+# ENV PATH="${GOROOT}/bin:${PATH}"
+# RUN \
 # Ginkgo
 #  go get github.com/onsi/ginkgo/ginkgo && \
-#  go get github.com/onsi/gomega/... && \
-# vars-to-credhub
- go get "github.com/vmware-tanzu-labs/vars-to-credhub"
+#  go get github.com/onsi/gomega/...
 
 RUN \
 # Clean up
