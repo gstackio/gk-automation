@@ -6,8 +6,8 @@ image_resource:
   source: { repository: gstack/gk-ops }
 
 inputs:
-  - name: bump-info     # type: keyvalue
-                        #     files: 'artifact-version', 'branch-name'
+  - name: bump-info     # type: keyvalue, file: 'artifact-version'
+  - name: branch-info   # type: keyvalue, file: 'branch-name'
   - name: gk-automation # type: git
 
 outputs:

@@ -3,7 +3,7 @@
 set -ueo pipefail
 
 artifact_version=$(< bump-info/artifact-version)
-branch_name=$(     < bump-info/branch-name)
+branch_name=$(     < branch-info/branch-name)
 
 pr_title="Bump ${ARTIFACT_HUMAN_NAME} to version ${artifact_version}"
 
