@@ -17,6 +17,7 @@ outputs:
 
 params:
   BRANCH_NAME_TEMPLATE:
+  GITHUB_PRIVATE_KEY:
 
 run:
-  path: gk-automation/tasks/git/start-new-branch.sh
+  path: gk-automation/tasks/git/checkout-branch.sh
