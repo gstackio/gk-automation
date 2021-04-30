@@ -2,14 +2,14 @@
 
 set -ueo pipefail
 
-latest_version=$(< bump-info/artifact-version)
-branch_name=$(   < bump-info/branch-name)
+artifact_version=$(< bump-info/artifact-version)
+branch_name=$(     < bump-info/branch-name)
 
-pr_title="Bump ${ARTIFACT_HUMAN_NAME} to version ${latest_version}"
+pr_title="Bump ${ARTIFACT_HUMAN_NAME} to version ${artifact_version}"
 
 pr_desc="Hi there!"
 pr_desc+="\\n"
-pr_desc+="\\nI noticed that the new ${ARTIFACT_HUMAN_NAME} v${latest_version} is out,"
+pr_desc+="\\nI noticed that the new ${ARTIFACT_HUMAN_NAME} v${artifact_version} is out,"
 pr_desc+=" so I suggest we update this BOSH Release with the latest artifact available."
 pr_desc+="\\n"
 pr_desc+="\\nHere in this PR, I've pulled that new artifact in."
