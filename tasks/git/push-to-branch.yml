@@ -6,7 +6,7 @@ image_resource:
   source: { repository: gstack/gk-ops }
 
 inputs:
-  - name: branch-info   # type: keyval, with a 'branch_name' property
+  - name: branch-info   # type: keyvalue, with a 'branch-name' file
     optional: true
   - name: repo          # type: git
   - name: gk-automation # type: git

@@ -11,13 +11,10 @@ cat <<< "${GITHUB_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
 
 if [[ -n ${BRANCH_NAME} ]]; then
     branch_name="${BRANCH_NAME}"
-elif [[ -f "branch-info/keyval.properties" ]]; then
-    grep -vE "^(UPDATED|UUID)=" "branch-info/keyval.properties" \
-        | sed -r -e 's/"/\"/g; s/=(.*)$/="\1"/' \
-        > keyval.inc.bash
-    source "keyval.inc.bash"
+elif [[ -f "branch-info/branch-name" ]]; then
+    branch_name=$(< branch-info/branch-name)
 else
-    echo "ERROR: no 'branch-info' resource, and no 'BRANCH_NAME' param. One must be specified. Aborting." >&2
+    echo "ERROR: no 'branch-info/branch-name' file, and no 'BRANCH_NAME' param. One must be specified. Aborting." >&2
     exit 2
 fi
 

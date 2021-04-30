@@ -2,18 +2,13 @@
 
 set -ueo pipefail
 
-(
-    set -x
-    find bosh-io-release -ls
-)
+boshrelease_version=$(< bosh-io-release/version)
+url=$(                < bosh-io-release/url)
+sha1=$(               < bosh-io-release/sha1)
 
-echo version: $(< bosh-io-release/version)
-echo url:     $(< bosh-io-release/url)
-echo sha1:    $(< bosh-io-release/sha1)
-
-latest_boshrelease_version=$(< bosh-io-release/version)
-url=$(< bosh-io-release/url)
-sha1=$(< bosh-io-release/sha1)
+echo "version: ${boshrelease_version}"
+echo "url:     ${url}"
+echo "sha1:    ${sha1}"
 
 (
     set -x
@@ -21,19 +16,17 @@ sha1=$(< bosh-io-release/sha1)
 )
 
 pushd "repo-bumped" > /dev/null
-    git checkout "${BRANCH_NAME}"
-    git pull
 
     releases_updated=$(spruce merge <<YAML
 releases: $(spruce json "${MANIFEST_PATH}" \
     | jq --compact-output \
         --arg name "${RELEASE_NAME}" \
-        --arg version "${latest_boshrelease_version}" \
+        --arg version "${boshrelease_version}" \
         --arg url "${url}" \
         --arg sha1 "${sha1}" \
         '.releases | map(
             if .name == $name
-            then . + {"version":$version,"url":$url,"sha1":$sha1}
+            then . + { "version": $version, "url": $url, "sha1": $sha1 }
             else .
             end)'
     )
@@ -47,25 +40,8 @@ ${opsfile_head}
 ${releases_updated}
 YAML
 
-    git config --global "color.ui" "always"
-    git status
-    git diff | cat
-
-    git config --global "user.name" "${GIT_NAME}"
-    git config --global "user.email" "${GIT_EMAIL}"
-
-    git add .
-    (
-        set -x
-        git commit -m "Bump the '${RELEASE_NAME}' BOSH Release to version ${latest_boshrelease_version}"
-    )
 popd > /dev/null
 
+echo "Bump the '${RELEASE_NAME}' BOSH Release to version ${boshrelease_version}" > commit-info/commit-message
 
-# Write properties to the keyval output resource
-
-mkdir -p "bump-info"
-{
-    echo "latest_boshrelease_version=${latest_boshrelease_version}"
-    echo "branch_name=${BRANCH_NAME}"
-} >> bump-info/keyval.properties
+echo "${boshrelease_version}" > bump-info/artifact-version

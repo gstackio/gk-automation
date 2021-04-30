@@ -12,15 +12,12 @@ inputs:
 
 outputs:
   - name: repo-bumped     # type: git
-  - name: bump-info       # type: keyval
-                          # props: 'latest_boshrelease_version', 'branch_name'
+  - name: commit-info     # type: keyvalue, file: 'commit-message'
+  - name: bump-info       # type: keyvalue, file: 'artifact-version'
 
 params:
   RELEASE_NAME:
   MANIFEST_PATH:
-  GIT_EMAIL:
-  GIT_NAME:
-  BRANCH_NAME: master
 
 run:
   path: gk-automation/tasks/boshrelease/depl-manifest-release-bump.sh
