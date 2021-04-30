@@ -1,0 +1,22 @@
+---
+platform: linux
+
+image_resource:
+  type: registry-image
+  source: { repository: gstack/gk-ops }
+
+inputs:
+  - name: bump-info     # type: keyvalue
+                        #     files: 'artifact-version', 'branch-name'
+  - name: gk-automation # type: git
+
+outputs:
+  - name: pr-info       # type: keyvalue
+                        #     files: 'title', 'body', 'branch'
+
+params:
+  ARTIFACT_HUMAN_NAME:
+  RELEASE_NOTES_URL_TMPL:
+
+run:
+  path: gk-automation/tasks/boshrelease/compose-pr.sh

@@ -1,0 +1,20 @@
+---
+platform: linux
+
+image_resource:
+  type: registry-image
+  source: { repository: gstack/gk-ops }
+
+inputs:
+  - name: boshrelease-repo
+  - name: gk-automation
+
+outputs:
+  - name: boshrelease-repo-blobs-uploaded
+
+params:
+  S3_ACCESS_KEY_ID:
+  S3_SECRET_ACCESS_KEY:
+
+run:
+  path: gk-automation/tasks/boshrelease/upload-blobs.sh

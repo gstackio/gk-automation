@@ -1,0 +1,30 @@
+---
+platform: linux
+
+image_resource:
+  type: registry-image
+  source: { repository: gstack/gk-ops }
+
+inputs:
+  - name: artifact-release         # type: github-release or hashicorp-release
+  - name: boshrelease-repo         # type: git
+  - name: gk-automation            # type: git
+
+outputs:
+  - name: boshrelease-repo-bumped  # type: git
+  - name: commit-info              # type: keyvalue, file: 'commit-message'
+  - name: bump-info                # type: keyvalue
+                                   #   files: 'artifact-version', 'branch-name'
+
+params:
+  ARTIFACT_HUMAN_NAME:
+  ARTIFACT_SHORT_NAME:
+  ARTIFACT_FILE_TEMPLATE:
+  GIT_MAIN_BRANCH: master
+  BLOB_PATH_AWK_PATTERN:
+  BLOB_PATH_TEMPLATE:
+  PACKAGE_NAME:
+  ARTIFACT_REF_VARS_PREFIX:
+
+run:
+  path: gk-automation/tasks/boshrelease/bump-blob.sh

@@ -1,0 +1,19 @@
+---
+platform: linux
+
+image_resource:
+  type: registry-image
+  source: { repository: gstack/gk-ops }
+
+inputs:
+  - name: pr-info       # type: keyvalue
+                        #     files: 'title', 'body', 'branch'
+  - name: gk-automation # type: git
+
+params:
+  GH_ACCESS_TOKEN:
+  GH_OWNER:
+  GH_REPO:
+
+run:
+  path: gk-automation/tasks/github/submit-pr.sh
