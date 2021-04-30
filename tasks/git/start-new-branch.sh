@@ -11,7 +11,7 @@ find "repo" -mindepth 1 -maxdepth 1 -print0 \
     | xargs -0 -I{} cp -a {} "repo-branched"
 
 pushd "repo-branched" > /dev/null
-	current_branch=$(git branch --show-current)
+    current_branch=$(git rev-parse --abbrev-ref "HEAD") # or 'git branch --show-current' when git >= 2.22
     if [[ ${branch_name} != "${current_branch}" ]]; then
         git checkout -b "${branch_name}"
     fi
