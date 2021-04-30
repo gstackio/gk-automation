@@ -21,7 +21,7 @@ pr_data=$(jq -n \
 
 echo "Creating pull request: POST /repos/${GH_OWNER}/${GH_REPO}/pulls"
 # See also: https://developer.github.com/v3/
-curl --silent --fail \
+curl --silent --fail --show-error --location \
     --header "Accept: application/vnd.github.v3+json" \
     --header "Authorization: token ${GH_ACCESS_TOKEN}" \
     --request "POST" \
