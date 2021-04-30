@@ -11,7 +11,10 @@ else
     exit 2
 fi
 
-pushd "repo" > /dev/null
+find "repo" -mindepth 1 -maxdepth 1 -print0 \
+    | xargs -0 -I{} cp -a {} "repo-committed"
+
+pushd "repo-committed" > /dev/null
     git config "color.ui" "always"
     git status
     git diff | cat
@@ -25,11 +28,4 @@ pushd "repo" > /dev/null
         git add .
         git commit -m "${commit_message}"
     fi
-popd > /dev/null
-
-git clone "repo" "repo-committed"
-
-pushd "repo-committed" > /dev/null
-    git config "user.name"  "${GIT_COMMIT_NAME}"
-    git config "user.email" "${GIT_COMMIT_EMAIL}"
 popd > /dev/null

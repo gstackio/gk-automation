@@ -5,34 +5,27 @@ set -ueo pipefail
 blob_version=$(< artifact-release/version)
 echo "version: ${blob_version}"
 
-git clone "boshrelease-repo" "boshrelease-repo-bumped"
-branch_name="bump-${ARTIFACT_SHORT_NAME}-${blob_version}"
+find "boshrelease-repo" -mindepth 1 -maxdepth 1 -print0 \
+    | xargs -0 -I{} cp -a {} "boshrelease-repo-bumped"
 
 pushd "boshrelease-repo-bumped" > /dev/null
-    git checkout "${GIT_MAIN_BRANCH}"
-    git pull
-
-    if [[ ${branch_name} != "${GIT_MAIN_BRANCH}" ]]; then
-        git checkout -b "${branch_name}"
-    fi
-
     bosh blobs
 
     old_blob_sha256=$(
         bosh blobs --column "path" --column "digest" \
-        	| awk "/${BLOB_PATH_AWK_PATTERN}/"'{sub("^sha256:", "", $2); print $2}'
+            | awk "/${BLOB_PATH_AWK_PATTERN}/"'{sub("^sha256:", "", $2); print $2}'
     )
     artifact_file=$(eval "echo ${ARTIFACT_FILE_TEMPLATE}")
     new_blob_sha256=$(
         shasum -a 256 "../artifact-release/${artifact_file}" \
-        	| awk '{print $1}'
+            | awk '{print $1}'
     )
     if [[ ${new_blob_sha256} == ${old_blob_sha256} ]]; then
         echo "INFO: new blob has the same sha256 hash as the old one. Skipping blob update."
     else
         old_blob_path=$(
-        	bosh blobs --column "path" \
-        		| awk "/${BLOB_PATH_AWK_PATTERN}/"'{print $1}'
+            bosh blobs --column "path" \
+                | awk "/${BLOB_PATH_AWK_PATTERN}/"'{print $1}'
         )
         bosh remove-blob "${old_blob_path}"
 

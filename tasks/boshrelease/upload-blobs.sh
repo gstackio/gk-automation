@@ -2,8 +2,8 @@
 
 set -ueo pipefail
 
-git clone "boshrelease-repo" "boshrelease-repo-blobs-uploaded"
-cp -Rp "boshrelease-repo/blobs" "boshrelease-repo-blobs-uploaded"
+find "boshrelease-repo" -mindepth 1 -maxdepth 1 -print0 \
+    | xargs -0 -I{} cp -a {} "boshrelease-repo-blobs-uploaded"
 
 pushd "boshrelease-repo-blobs-uploaded" > /dev/null
     (

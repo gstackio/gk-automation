@@ -12,7 +12,8 @@ echo "sha1:    ${sha1}"
 
 (
     set -x
-    git clone "repo" "repo-bumped"
+    find "repo" -mindepth 1 -maxdepth 1 -print0 \
+        | xargs -0 -I{} cp -a {} "repo-bumped"
 )
 
 pushd "repo-bumped" > /dev/null

@@ -1,0 +1,20 @@
+---
+platform: linux
+
+image_resource:
+  type: registry-image
+  source: { repository: gstack/gk-ops }
+
+inputs:
+  - name: repo           # type: git
+  - name: gk-automation  # type: git
+
+outputs:
+  - name: repo-branched  # type: git
+  - name: branch-info    # type: keyvalue, files: 'branch-name'
+
+params:
+  BRANCH_NAME_TEMPLATE:
+
+run:
+  path: gk-automation/tasks/git/start-new-branch.sh

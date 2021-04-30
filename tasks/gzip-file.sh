@@ -2,6 +2,6 @@
 
 set -ueo pipefail
 
-cp -Rp artifact/* artifact-gzipped/
+cp -a artifact/* artifact-gzipped/
 
 gzip -c9 "artifact-gzipped/${ARTIFACT_FILE}"
