@@ -24,4 +24,4 @@ params:
   # specified. Takes precedence over the 'commit-info' resource.
 
 run:
-  path: gk-automation/boshrelease/git-commit.sh
+  path: gk-automation/tasks/git/commit.sh

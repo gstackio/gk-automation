@@ -21,4 +21,4 @@ params:
   # Takes precedence over the 'branch-info' resource.
 
 run:
-  path: gk-automation/boshrelease/git-push.sh
+  path: gk-automation/tasks/git/push-to-branch.sh

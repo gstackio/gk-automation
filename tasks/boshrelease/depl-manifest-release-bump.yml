@@ -23,4 +23,4 @@ params:
   BRANCH_NAME: master
 
 run:
-  path: gk-automation/boshrelease/depl-manifest-release-bump.sh
+  path: gk-automation/tasks/boshrelease/depl-manifest-release-bump.sh
