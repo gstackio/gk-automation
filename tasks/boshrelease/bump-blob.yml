@@ -6,15 +6,14 @@ image_resource:
   source: { repository: gstack/gk-ops }
 
 inputs:
-  - name: artifact-release         # type: github-release or hashicorp-release
-  - name: boshrelease-repo         # type: git
-  - name: gk-automation            # type: git
+  - name: artifact-release        # type: github-release or hashicorp-release
+  - name: boshrelease-repo        # type: git
+  - name: gk-automation           # type: git
 
 outputs:
-  - name: boshrelease-repo-bumped  # type: git
-  - name: commit-info              # type: keyvalue, file: 'commit-message'
-  - name: bump-info                # type: keyvalue
-                                   #   files: 'artifact-version', 'branch-name'
+  - name: boshrelease-repo-bumped # type: git
+  - name: commit-info             # type: keyvalue, file: 'commit-message'
+  - name: bump-info               # type: keyvalue, file: 'artifact-version'
 
 params:
   ARTIFACT_HUMAN_NAME:

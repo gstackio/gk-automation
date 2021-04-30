@@ -6,12 +6,14 @@ image_resource:
   source: { repository: gstack/gk-ops }
 
 inputs:
-  - name: repo           # type: git
-  - name: gk-automation  # type: git
+  - name: artifact-version # type: github-release or hashicorp-release,
+                           #       or anything providing a 'version' file
+  - name: repo             # type: git
+  - name: gk-automation    # type: git
 
 outputs:
-  - name: repo-branched  # type: git
-  - name: branch-info    # type: keyvalue, files: 'branch-name'
+  - name: repo-branched    # type: git
+  - name: branch-info      # type: keyvalue, files: 'branch-name'
 
 params:
   BRANCH_NAME_TEMPLATE:
