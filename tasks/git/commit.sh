@@ -2,6 +2,9 @@
 
 set -ueo pipefail
 
+: ${GIT_COMMIT_NAME:?required}
+: ${GIT_COMMIT_EMAIL:?required}
+
 if [[ -n ${GIT_COMMIT_MESSAGE} ]]; then
     commit_message="${GIT_COMMIT_MESSAGE}"
 elif [[ -f "commit-info/commit-message" ]]; then

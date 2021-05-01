@@ -2,6 +2,13 @@
 
 set -ueo pipefail
 
+: ${ARTIFACT_HUMAN_NAME:?required}
+: ${ARTIFACT_FILE_TEMPLATE:?required}
+: ${BLOB_PATH_AWK_PATTERN:?required}
+: ${BLOB_PATH_TEMPLATE:?required}
+: ${PACKAGE_NAME:?required}
+: ${ARTIFACT_REF_VARS_PREFIX:?required}
+
 artifact_version=$(< artifact-release/version)
 echo "version: ${artifact_version}"
 

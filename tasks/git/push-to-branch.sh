@@ -2,12 +2,8 @@
 
 set -ueo pipefail
 
-mkdir -p "${HOME}/.ssh"
-chmod 700 "${HOME}/.ssh"
-
-touch "${HOME}/.ssh/id_rsa"
-chmod 600 "${HOME}/.ssh/id_rsa"
-cat <<< "${GITHUB_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
+: ${GIT_URI:?required}
+: ${GITHUB_PRIVATE_KEY:?required}
 
 if [[ -n ${BRANCH_NAME} ]]; then
     branch_name="${BRANCH_NAME}"
@@ -26,6 +22,13 @@ else
     echo "ERROR: no 'branch-info/base-branch' file, and no 'BASE_BRANCH' param. One must be specified. Aborting." >&2
     exit 2
 fi
+
+mkdir -p "${HOME}/.ssh"
+chmod 700 "${HOME}/.ssh"
+
+touch "${HOME}/.ssh/id_rsa"
+chmod 600 "${HOME}/.ssh/id_rsa"
+cat <<< "${GITHUB_PRIVATE_KEY}" > "${HOME}/.ssh/id_rsa"
 
 find "repo" -mindepth 1 -maxdepth 1 -print0 \
     | xargs -0 -I{} cp -a {} "repo-pushed"

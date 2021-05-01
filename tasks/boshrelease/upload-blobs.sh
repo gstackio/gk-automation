@@ -2,6 +2,9 @@
 
 set -ueo pipefail
 
+: ${S3_ACCESS_KEY_ID:?required}
+: ${S3_SECRET_ACCESS_KEY:?required}
+
 find "boshrelease-repo" -mindepth 1 -maxdepth 1 -print0 \
     | xargs -0 -I{} cp -a {} "boshrelease-repo-blobs-uploaded"
 

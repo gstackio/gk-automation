@@ -2,6 +2,9 @@
 
 set -ueo pipefail
 
+: ${RELEASE_NAME:?required}
+: ${MANIFEST_PATH:?required}
+
 boshrelease_version=$(< bosh-io-release/version)
 url=$(                < bosh-io-release/url)
 sha1=$(               < bosh-io-release/sha1)

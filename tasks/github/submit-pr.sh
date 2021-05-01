@@ -2,6 +2,10 @@
 
 set -ueo pipefail
 
+: ${GH_ACCESS_TOKEN:?required}
+: ${GH_OWNER:?required}
+: ${GH_REPO:?required}
+
 pr_title=$(   < pr-info/title)
 pr_desc=$(    < pr-info/body)
 branch_name=$(< pr-info/branch)

@@ -2,6 +2,9 @@
 
 set -ueo pipefail
 
+: ${ARTIFACT_HUMAN_NAME:?required}
+: ${RELEASE_NOTES_URL_TMPL:?required}
+
 artifact_version=$(< bump-info/artifact-version)
 branch_name=$(     < branch-info/branch-name)
 base_branch=$(     < branch-info/base-branch)

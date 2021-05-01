@@ -2,6 +2,10 @@
 
 set -ueo pipefail
 
+: ${BASE_BRANCH:?required}
+: ${BRANCH_NAME_TEMPLATE:?required}
+: ${GITHUB_PRIVATE_KEY:?required}
+
 artifact_version=$(< artifact-version/version)
 echo "version: ${artifact_version}"
 
