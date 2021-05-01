@@ -6,4 +6,5 @@ set -ueo pipefail
 
 cp -a artifact/* artifact-gzipped/
 
-gzip -9 "artifact-gzipped/${ARTIFACT_FILE}"
+gzip --best "artifact-gzipped/${ARTIFACT_FILE}"
+gzip --list "artifact-gzipped/${ARTIFACT_FILE}.gz"
