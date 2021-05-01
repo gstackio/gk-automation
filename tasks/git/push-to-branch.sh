@@ -18,7 +18,24 @@ else
     exit 2
 fi
 
-pushd "repo" > /dev/null
+if [[ -n ${BASE_BRANCH} ]]; then
+    base_branch="${BASE_BRANCH}"
+elif [[ -f "branch-info/base-branch" ]]; then
+    base_branch=$(< branch-info/base-branch)
+else
+    echo "ERROR: no 'branch-info/base-branch' file, and no 'BASE_BRANCH' param. One must be specified. Aborting." >&2
+    exit 2
+fi
+
+find "repo" -mindepth 1 -maxdepth 1 -print0 \
+    | xargs -0 -I{} cp -a {} "repo-pushed"
+
+pushd "repo-pushed" > /dev/null
+    if [[ -z $(git diff --shortstat "${base_branch}") ]]; then
+        echo "INFO: current branch '${branch_name}' has no changes" \
+            "compared to base branch '${base_branch}'. Nothing more to do."
+        exit 0
+    fi
     if git remote | grep -q '^origin$'; then
         git remote remove "origin"
     fi

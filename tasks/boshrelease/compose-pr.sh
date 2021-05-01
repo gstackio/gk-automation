@@ -4,6 +4,7 @@ set -ueo pipefail
 
 artifact_version=$(< bump-info/artifact-version)
 branch_name=$(     < branch-info/branch-name)
+base_branch=$(     < branch-info/base-branch)
 
 pr_title="Bump ${ARTIFACT_HUMAN_NAME} to version ${artifact_version}"
 
@@ -28,3 +29,4 @@ pr_desc+="\\nBest"
 echo "${pr_title}"    > pr-info/title
 echo -e "${pr_desc}"  > pr-info/body
 echo "${branch_name}" > pr-info/branch
+echo "${base_branch}" > pr-info/base-branch

@@ -6,10 +6,13 @@ image_resource:
   source: { repository: gstack/gk-ops }
 
 inputs:
-  - name: branch-info   # type: keyvalue, with a 'branch-name' file
+  - name: branch-info   # type: keyvalue, files: 'branch-name' and 'base-branch'
     optional: true
   - name: repo          # type: git
   - name: gk-automation # type: git
+
+outputs:
+  - name: repo-pushed   # type: git
 
 params:
   GIT_URI:
@@ -17,7 +20,12 @@ params:
 
   BRANCH_NAME:
   # Optional
-  # One of 'branch-info' resource of 'BRANCH_NAME' param must be specified.
+  # One of 'branch-info/branch-name' file or 'BRANCH_NAME' param must be specified.
+  # Takes precedence over the 'branch-info' resource.
+
+  BASE_BRANCH:
+  # Optional
+  # One of 'branch-info/base-branch' file or 'BASE_BRANCH' param must be specified.
   # Takes precedence over the 'branch-info' resource.
 
 run:

@@ -7,7 +7,8 @@ image_resource:
 
 inputs:
   - name: pr-info       # type: keyvalue
-                        #     files: 'title', 'body', 'branch'
+                        #     files: 'title', 'body', 'branch', 'base-branch'
+  - name: repo          # type: git
   - name: gk-automation # type: git
 
 params:
