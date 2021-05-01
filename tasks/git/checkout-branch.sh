@@ -18,8 +18,6 @@ find "repo" -mindepth 1 -maxdepth 1 -print0 \
     | xargs -0 -I{} cp -a {} "repo-branched"
 
 pushd "repo-branched" > /dev/null
-    base_branch=$(git rev-parse --abbrev-ref "HEAD") # or 'git branch --show-current' when git >= 2.22
-
     ssh-keyscan -t "rsa" "bitbucket.org" "github.com" 2> /dev/null >> "${HOME}/.ssh/known_hosts"
     (
         set -x
@@ -32,13 +30,16 @@ pushd "repo-branched" > /dev/null
             set -x
             git checkout "${branch_name}"
         )
-    elif [[ ${branch_name} != "${base_branch}" ]]; then
-        (
-            set -x
-            git checkout -b "${branch_name}"
-        )
+    else
+        git checkout "${BASE_BRANCH}"
+        if [[ ${branch_name} != "${BASE_BRANCH}" ]]; then
+            (
+                set -x
+                git checkout -b "${branch_name}"
+            )
+        fi
     fi
 popd > /dev/null
 
 echo "${branch_name}" > branch-info/branch-name
-echo "${base_branch}" > branch-info/base-branch
+echo "${BASE_BRANCH}" > branch-info/base-branch

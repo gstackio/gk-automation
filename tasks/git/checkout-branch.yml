@@ -16,6 +16,7 @@ outputs:
   - name: branch-info      # type: keyvalue, files: 'branch-name'
 
 params:
+  BASE_BRANCH:
   BRANCH_NAME_TEMPLATE:
   GITHUB_PRIVATE_KEY:
 
