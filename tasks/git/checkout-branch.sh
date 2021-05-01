@@ -23,6 +23,8 @@ find "repo" -mindepth 1 -maxdepth 1 -print0 \
 
 pushd "repo-branched" > /dev/null
     ssh-keyscan -t "rsa" "bitbucket.org" "github.com" 2> /dev/null >> "${HOME}/.ssh/known_hosts"
+    git config --unset-all "remote.origin.fetch"
+    git config --add "remote.origin.fetch" "+refs/heads/*:refs/remotes/origin/*"
     (
         set -x
         git fetch "origin"
