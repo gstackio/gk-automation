@@ -19,6 +19,24 @@ pushd "repo" > /dev/null
     fi
 popd > /dev/null
 
+
+open_pulls_url="https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/pulls"
+open_pulls_url+="?state=open&head=${GH_OWNER}/${branch_name}&base=${base_branch}"
+
+open_pulls_count=$(
+    curl --silent --fail --show-error --location \
+            --header "Accept: application/vnd.github.v3+json" \
+            --header "Authorization: token ${GH_ACCESS_TOKEN}" \
+            --request "GET" \
+            --url "${open_pulls_url}" \
+        | jq 'length'
+)
+if [[ ${open_pulls_count} -gt 0 ]]; then
+    echo "INFO: current branch '${branch_name}' already has an open" \
+        "pull request to base branch '${base_branch}'. Nothing more to do."
+    exit 0
+fi
+
 # See also: https://developer.github.com/v3/pulls/#create-a-pull-request
 pr_data=$(jq -n \
     --arg "title" "${pr_title}" \
