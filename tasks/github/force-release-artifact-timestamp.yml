@@ -13,8 +13,6 @@ outputs:
   - name: github-release-timestamped # type: github-release
 
 params:
-  GH_OWNER:
-  GH_REPO:
   ARTIFACT_FILE:
 
 run:
