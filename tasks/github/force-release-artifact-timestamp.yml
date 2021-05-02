@@ -1,0 +1,21 @@
+---
+platform: linux
+
+image_resource:
+  type: registry-image
+  source: { repository: gstack/gk-ops }
+
+inputs:
+  - name: github-release             # type: github-release
+  - name: gk-automation              # type: git
+
+outputs:
+  - name: github-release-timestamped # type: github-release
+
+params:
+  GH_OWNER:
+  GH_REPO:
+  ARTIFACT_FILE:
+
+run:
+  path: gk-automation/tasks/github/force-release-artifact-timestamp.sh
