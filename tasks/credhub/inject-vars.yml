@@ -1,0 +1,51 @@
+---
+platform: linux
+
+image_resource:
+  type: registry-image
+  source: { repository: gstack/gk-ops }
+
+inputs:
+  - name: gk-automation
+  - name: config-source-1
+    optional: true
+  - name: config-source-2
+    optional: true
+  - name: config-source-3
+    optional: true
+  - name: config-source-4
+    optional: true
+  - name: config-source-5
+    optional: true
+
+outputs:
+  - name: pre-filled-configs
+
+params:
+  VARS_FILES:
+  # YAML array of sources (YAML files) for vars to be injected. Those are
+  # treated in order. This is the "the last one to speak wins".
+
+  #  Example:
+  #
+  # - terraform-state/metadata
+  # - configs/transverse/settings.yml
+  # - automation/pipelines/converge-foundation/flowing-config/settings.yml
+  # - automation/pipelines/converge-foundation/flowing-config/versions.yml
+  # - configs/((env_name))/settings.yml
+
+  CONFIG_FILES:
+  # YAML array defining source for templated configs where vars will be
+  # injected, and destination files where the rendered templates will be
+  # written/
+
+  #  Example:
+  #
+  # - src: automation/pipelines/converge-foundation/flowing-config/templates/download-opsman.yml
+  #   dst: download-config.yml
+  # - src: automation/pipelines/converge-foundation/flowing-config/templates/upgrade-opsman.yml
+  #   dst: opsman.yml
+  # - src: automation/pipelines/converge-foundation/flowing-config/templates/opsman-env.yml
+  #   dst: env.yml
+run:
+  path: gk-automation/tasks/credhub/inject-vars.sh
