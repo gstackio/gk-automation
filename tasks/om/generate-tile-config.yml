@@ -1,0 +1,24 @@
+---
+
+platform: linux
+
+image_resource:
+  type: registry-image
+  source: { repository: gstack/gk-ops }
+
+inputs:
+  - name: gk-automation # type: git
+  - name: repo          # type: git
+
+outputs:
+  - name: repo-updated  # type: git
+
+params:
+  PIVNET_PRODUCT_SLUG:
+  PIVNET_PRODUCT_VERSION:
+  PIVNET_PRODUCT_FILE_GLOB:
+  PIVNET_API_TOKEN:
+  OUTPUT_DIR:
+
+run:
+  path: gk-automation/tasks/om/generate-tile-config.sh
