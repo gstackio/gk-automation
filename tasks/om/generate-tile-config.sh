@@ -18,7 +18,7 @@ pushd "repo-updated" > /dev/null
     om config-template \
         --pivnet-product-slug="${PIVNET_PRODUCT_SLUG}" \
         --product-version="${PIVNET_PRODUCT_VERSION}" \
-        --product-file-glob="${PIVNET_PRODUCT_FILE_GLOB}" \
+        --file-glob="${PIVNET_PRODUCT_FILE_GLOB}" \
         \
         --pivnet-api-token="${PIVNET_API_TOKEN}" \
         --exclude-version \
