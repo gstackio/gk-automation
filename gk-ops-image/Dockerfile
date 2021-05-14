@@ -37,7 +37,8 @@ RUN \
 \
 # Install the add-apt-repository CLI
  apt-get update -qq && \
- apt-get -y install --no-install-recommends "software-properties-common" "gpg-agent" && \
+ apt-get -y install --no-install-recommends \
+    "software-properties-common" "gpg-agent" "apt-transport-https" && \
 \
 \
 \
@@ -61,7 +62,7 @@ RUN \
     --output "/etc/apt/sources.list.d/microsoft.list" && \
 \
 # gcloud SDK
- echo "deb http://packages.cloud.google.com/apt ${distrib_codename} main" \
+ echo "deb https://packages.cloud.google.com/apt cloud-sdk main" \
     | tee "/etc/apt/sources.list.d/google-cloud.list" && \
  curl --fail --show-error --silent --location \
         --url "https://packages.cloud.google.com/apt/doc/apt-key.gpg" \
