@@ -37,7 +37,7 @@ RUN \
 \
 # Install the add-apt-repository CLI
  apt-get update -qq && \
- apt-get -y install --no-install-recommends "software-properties-common" && \
+ apt-get -y install --no-install-recommends "software-properties-common" "gpg-agent" && \
 \
 \
 \
