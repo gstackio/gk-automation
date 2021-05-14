@@ -43,17 +43,31 @@ RUN \
 \
 # Azure Client
  az_repo=$(lsb_release -cs) && \
- echo "deb https://packages.microsoft.com/repos/azure-cli/ ${az_repo} main" | tee /etc/apt/sources.list.d/azure-cli.list && \
- curl --fail --show-error --silent --location https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg && \
+ echo "deb https://packages.microsoft.com/repos/azure-cli/ ${az_repo} main" \
+    | tee "/etc/apt/sources.list.d/azure-cli.list" && \
+ curl --fail --show-error --silent --location \
+        --url "https://packages.microsoft.com/keys/microsoft.asc" \
+    | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg && \
 \
 # certbot
- add-apt-repository universe && \
- add-apt-repository ppa:certbot/certbot && \
+ add-apt-repository "universe" && \
+ add-apt-repository "ppa:certbot/certbot" && \
 \
 # sqlcmd
- curl --fail --show-error --silent --location https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
- curl --fail --show-error --silent --location https://packages.microsoft.com/config/ubuntu/18.04/prod.list \
-      --output /etc/apt/sources.list.d/mssql-release.list && \
+ curl --fail --show-error --silent --location \
+        --url "https://packages.microsoft.com/keys/microsoft.asc" \
+    | apt-key add - && \
+ curl --fail --show-error --silent --location \
+    --url "https://packages.microsoft.com/config/ubuntu/18.04/prod.list" \
+    --output "/etc/apt/sources.list.d/mssql-release.list" && \
+\
+# gcloud SDK
+ CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
+ echo "deb http://packages.cloud.google.com/apt ${CLOUD_SDK_REPO} main" \
+    | tee "/etc/apt/sources.list.d/google-cloud-sdk.list" && \
+ curl --fail --show-error --silent --location \
+        --url "https://packages.cloud.google.com/apt/doc/apt-key.gpg" \
+    | apt-key add - && \
 \
 \
 \
@@ -82,8 +96,10 @@ RUN \
  pip install six --upgrade && \
 \
 # Azure Client
- apt-get -y install --no-install-recommends apt-transport-https && \
- apt-get -y install --no-install-recommends azure-cli && \
+ apt-get -y install --no-install-recommends "apt-transport-https" "azure-cli" && \
+\
+# gcloud SDK
+ apt-get -y install --no-install-recommends "google-cloud-sdk"
 \
 # envsubst
  apt-get -y install --no-install-recommends "gettext-base"

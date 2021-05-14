@@ -449,6 +449,7 @@ jobs:
           which gem                   && gem --version
           which uaac                  && uaac version
           which az                    && az version -o yaml
+          which gcloud                && gcloud --version
           which envsubst              && envsubst --version
           which go                    && go version
           which vars-to-credhub       && vars-to-credhub --help
