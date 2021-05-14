@@ -65,7 +65,8 @@ RUN \
     | tee "/etc/apt/sources.list.d/google-cloud.list" && \
  curl --fail --show-error --silent --location \
         --url "https://packages.cloud.google.com/apt/doc/apt-key.gpg" \
-    | apt-key --keyring "/etc/apt/trusted.gpg.d/google-cloud.gpg" add "-" && \
+    | APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE="it-s-okay" \
+        apt-key --keyring "/etc/apt/trusted.gpg.d/google-cloud.gpg" add "-" && \
 \
 \
 \
