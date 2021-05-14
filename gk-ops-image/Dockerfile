@@ -52,10 +52,6 @@ RUN \
     | APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE="it-s-okay" \
         apt-key --keyring "/etc/apt/trusted.gpg.d/microsoft.gpg" add "-" && \
 \
-# certbot
- add-apt-repository "universe" && \
- add-apt-repository "ppa:certbot/certbot" && \
-\
 # sqlcmd
  curl --fail --show-error --silent --location \
     --url "https://packages.microsoft.com/config/ubuntu/18.04/prod.list" \
