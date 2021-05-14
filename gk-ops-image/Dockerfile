@@ -37,17 +37,19 @@ RUN \
 \
 # Install the add-apt-repository CLI
  apt-get update -qq && \
- apt-get -y install --no-install-recommends software-properties-common && \
+ apt-get -y install --no-install-recommends "software-properties-common" && \
 \
 \
 \
-# Azure Client
- az_repo=$(lsb_release -cs) && \
- echo "deb https://packages.microsoft.com/repos/azure-cli/ ${az_repo} main" \
+ distrib_codename=$(lsb_release -cs) && \
+\
+# Azure Client & sqlcmd
+ echo "deb https://packages.microsoft.com/repos/azure-cli ${distrib_codename} main" \
     | tee "/etc/apt/sources.list.d/azure-cli.list" && \
  curl --fail --show-error --silent --location \
         --url "https://packages.microsoft.com/keys/microsoft.asc" \
-    | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg && \
+    | APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE="it-s-okay" \
+        apt-key --keyring "/etc/apt/trusted.gpg.d/microsoft.gpg" add "-" && \
 \
 # certbot
  add-apt-repository "universe" && \
@@ -55,19 +57,15 @@ RUN \
 \
 # sqlcmd
  curl --fail --show-error --silent --location \
-        --url "https://packages.microsoft.com/keys/microsoft.asc" \
-    | apt-key add - && \
- curl --fail --show-error --silent --location \
     --url "https://packages.microsoft.com/config/ubuntu/18.04/prod.list" \
-    --output "/etc/apt/sources.list.d/mssql-release.list" && \
+    --output "/etc/apt/sources.list.d/microsoft.list" && \
 \
 # gcloud SDK
- CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
- echo "deb http://packages.cloud.google.com/apt ${CLOUD_SDK_REPO} main" \
-    | tee "/etc/apt/sources.list.d/google-cloud-sdk.list" && \
+ echo "deb http://packages.cloud.google.com/apt ${distrib_codename} main" \
+    | tee "/etc/apt/sources.list.d/google-cloud.list" && \
  curl --fail --show-error --silent --location \
         --url "https://packages.cloud.google.com/apt/doc/apt-key.gpg" \
-    | apt-key add - && \
+    | apt-key --keyring "/etc/apt/trusted.gpg.d/google-cloud.gpg" add "-" && \
 \
 \
 \
