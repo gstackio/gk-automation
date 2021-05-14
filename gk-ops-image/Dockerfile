@@ -99,7 +99,7 @@ RUN \
  apt-get -y install --no-install-recommends "apt-transport-https" "azure-cli" && \
 \
 # gcloud SDK
- apt-get -y install --no-install-recommends "google-cloud-sdk"
+ apt-get -y install --no-install-recommends "google-cloud-sdk" && \
 \
 # envsubst
  apt-get -y install --no-install-recommends "gettext-base"
