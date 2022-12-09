@@ -6,7 +6,7 @@
 
 resource_types:
 - name: pivnet
-  type: docker-image
+  type: registry-image
   source:
     repository: pivotalcf/pivnet-resource
     tag: latest-final
@@ -36,7 +36,7 @@ resources:
     paths: [ gk-ops-image/Dockerfile ]
 
 - name: gk-ops-image
-  type: docker-image
+  type: docker-image # we can't migrate to 'registry-image' until we adopt the 'build-image' task
   check_every: 24h
   source:
     tag: latest
@@ -46,7 +46,7 @@ resources:
       password:   ((private-registry-password))
 
 - name: gk-ops-image-rc
-  type: docker-image
+  type: docker-image # we can't migrate to 'registry-image' until we adopt the 'build-image' task
   check_every: 24h
   source:
     tag: release-candidate
