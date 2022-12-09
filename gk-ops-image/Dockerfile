@@ -1,4 +1,4 @@
-FROM cloudfoundry/cflinuxfs3
+FROM cloudfoundry/cflinuxfs4
 
 COPY \
        om \
@@ -27,7 +27,7 @@ COPY \
 
 RUN \
 # Remove unnecessary packages with CVEs reported by our Clair image scanning in Harbor
- apt-get -y remove --purge "subversion" "libaudiofile1" "libwebp6" "mercurial" "imagemagick" "libopenjp2-7" && \
+ apt-get -y remove --purge "subversion" "libaudiofile1" "mercurial" "imagemagick" "libopenjp2-7" && \
  apt-get -y autoremove --purge
 
 # When in need for man pages, we may stop excluding them

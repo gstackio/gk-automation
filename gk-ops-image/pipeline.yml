@@ -52,11 +52,11 @@ resources:
     tag: release-candidate
     <<: *gk_ops_image_params
 
-- name: cflinuxfs3-image
+- name: cflinuxfs4-image
   type: docker-image
   check_every: 24h
   source:
-    repository: cloudfoundry/cflinuxfs3
+    repository: cloudfoundry/cflinuxfs4
     tag: latest
     username: ((dockerhub_username))
     password: ((dockerhub-password))
@@ -230,7 +230,7 @@ jobs:
     - get: dockerfile-repo
       trigger: true
       attempts: 3
-    - get: cflinuxfs3-image
+    - get: cflinuxfs4-image
       trigger: true
       params: { save: true }
       attempts: 1
@@ -316,7 +316,7 @@ jobs:
 
   - task: prepare-workspace
     attempts: 3
-    image: cflinuxfs3-image
+    image: cflinuxfs4-image
     config:
       platform: linux
       inputs:
@@ -426,7 +426,7 @@ jobs:
     attempts: 1
     inputs: detect
     params:
-      load_base: cflinuxfs3-image
+      load_base: cflinuxfs4-image
       build: workspace
 
 - name: test-image
