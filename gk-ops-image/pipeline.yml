@@ -27,6 +27,8 @@ resources:
 
 - name: dockerfile-repo
   type: git
+  icon: github
+  check_every: 24h
   source:
     uri: ((git_uri))
     branch: ((git_branch))
