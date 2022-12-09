@@ -11,5 +11,5 @@ image_version_git_uri: git@github.com:gstackio/gk-pipelines-compass.git
 image_version_git_branch: master
 
 dockerhub_username: gkconcourseninja
-docker_registry_repo: harbor.ci.gstack.io/gstack/gk-ops
-docker_registry_username: admin
+private_registry_repo: harbor.ci.gstack.io/gstack/gk-ops
+private_registry_username: admin

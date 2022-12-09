@@ -39,9 +39,9 @@ resources:
   source:
     tag: latest
     <<: &gk_ops_image_params
-      repository: ((docker_registry_repo))
-      username:   ((docker_registry_username))
-      password:   ((docker-registry-password))
+      repository: ((private_registry_repo))
+      username:   ((private_registry_username))
+      password:   ((private-registry-password))
 
 - name: gk-ops-image-rc
   type: docker-image
