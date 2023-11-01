@@ -21,7 +21,7 @@ popd > /dev/null
 
 
 open_pulls_url="https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/pulls"
-open_pulls_url+="?state=open&head=${GH_OWNER}/${branch_name}&base=${base_branch}"
+open_pulls_url+="?state=open&head=${GH_OWNER}:${branch_name}&base=${base_branch}"
 
 open_pulls_count=$(
     curl --silent --fail --show-error --location \
