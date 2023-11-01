@@ -26,7 +26,8 @@ open_pulls_url+="?state=open&head=${GH_OWNER}/${branch_name}&base=${base_branch}
 open_pulls_count=$(
     curl --silent --fail --show-error --location \
             --header "Accept: application/vnd.github.v3+json" \
-            --header "Authorization: token ${GH_ACCESS_TOKEN}" \
+            --header "Authorization: Bearer ${GH_ACCESS_TOKEN}" \
+            --header "X-GitHub-Api-Version: 2022-11-28" \
             --request "GET" \
             --url "${open_pulls_url}" \
         | jq 'length'
@@ -57,7 +58,8 @@ echo "Creating pull request: POST /repos/${GH_OWNER}/${GH_REPO}/pulls"
 # See also: https://developer.github.com/v3/
 curl --silent --fail --show-error --location \
     --header "Accept: application/vnd.github.v3+json" \
-    --header "Authorization: token ${GH_ACCESS_TOKEN}" \
+    --header "Authorization: Bearer ${GH_ACCESS_TOKEN}" \
+    --header "X-GitHub-Api-Version: 2022-11-28" \
     --request "POST" \
     --url "https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/pulls" \
     --data-raw "${pr_data}"
