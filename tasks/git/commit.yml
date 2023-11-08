@@ -18,6 +18,9 @@ params:
   GIT_COMMIT_NAME:
   GIT_COMMIT_EMAIL:
 
+  GIT_DIFF_OPTS:
+  # Optional
+
   GIT_COMMIT_MESSAGE:
   # Optional
   # One of 'commit-info' resource of 'GIT_COMMIT_MESSAGE' param must be

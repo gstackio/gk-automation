@@ -20,7 +20,7 @@ find "repo" -mindepth 1 -maxdepth 1 -print0 \
 pushd "repo-committed" > /dev/null
     git config "color.ui" "always"
     git status
-    git diff | cat
+    git diff ${GIT_DIFF_OPTS} | cat
 
     git config "user.name"  "${GIT_COMMIT_NAME}"
     git config "user.email" "${GIT_COMMIT_EMAIL}"
