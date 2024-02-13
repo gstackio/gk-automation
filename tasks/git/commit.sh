@@ -18,6 +18,9 @@ find "repo" -mindepth 1 -maxdepth 1 -print0 \
     | xargs -0 -I{} cp -a {} "repo-committed"
 
 pushd "repo-committed" > /dev/null
+    if [[ -f ".gitattributes" ]] && grep -qF "lfs" ".gitattributes"; then
+        git lfs install
+    fi
     git config "color.ui" "always"
     git status
     git diff ${GIT_DIFF_OPTS} | cat
