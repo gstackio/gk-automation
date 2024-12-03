@@ -72,9 +72,6 @@ RUN \
 \
 \
 \
-# pip
- apt-get -y install --no-install-recommends python-pip python-dev python-setuptools && \
-\
 # git-lfs
  apt-get -y install --no-install-recommends git-lfs && \
 \
@@ -87,9 +84,6 @@ RUN \
 # UAA Client
  apt-get -y install --no-install-recommends "ruby-dev" && \
  gem install cf-uaac --no-ri --no-rdoc && \
-\
-# Ensure latest version of six
- pip install six --upgrade && \
 \
 # Azure Client
  apt-get -y install --no-install-recommends "apt-transport-https" "azure-cli" && \
@@ -113,7 +107,7 @@ RUN \
 
 RUN \
 # Clean up
- apt-get remove -y python-dev apt-transport-https && \
+ apt-get remove -y apt-transport-https && \
  apt-get -y clean && apt-get -y autoremove --purge && \
  #rm -rf /etc/apt/ && \
  rm -rf /tmp/* && \

@@ -390,7 +390,7 @@ jobs:
           cp bosh-cli/bosh-* workspace/bosh
           cp yq/yq_linux_amd64 workspace/yq
           cp tile-config-generator/tile-config-generator-linux workspace/tile-config-generator
-          
+
           cp cf-mgmt/cf-mgmt-linux workspace/cf-mgmt
           cp cf-mgmt/cf-mgmt-config-linux workspace/cf-mgmt-config
           cp bbr/bbr-[0-9]*-linux-amd64 workspace/bbr
