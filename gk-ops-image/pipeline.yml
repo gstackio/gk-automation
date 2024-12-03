@@ -229,93 +229,70 @@ jobs:
   - in_parallel:
     - get: dockerfile-repo
       trigger: true
-      attempts: 3
     - get: cflinuxfs4-image
       trigger: true
       params: { save: true }
-      attempts: 1
     - get: semver-cli
       params: { globs: [ "*linux*" ] }
       trigger: true
-      attempts: 3
     - get: om-cli
       params: { globs: [ "*linux*" ] }
       trigger: true
-      attempts: 3
     - get: pivnet-cli
       params: { globs: [ "*linux*" ] }
       trigger: true
-      attempts: 3
     - get: stemcell-downloader
       params: { globs: [ "*linux*" ] }
       trigger: true
-      attempts: 3
     - get: terraform
       trigger: true
-      attempts: 3
     - get: jq
       params: { globs: [ "*linux64*" ] }
       trigger: true
-      attempts: 3
     - get: spruce-cli
       params: { globs: [ "*linux*" ] }
       trigger: true
-      attempts: 3
     - get: bosh-cli
       params: { globs: [ "*linux*" ] }
       trigger: true
-      attempts: 3
     - get: yq
       params: { globs: [ "*linux_amd64*" ] }
       trigger: true
-      attempts: 3
     - get: cf-cli
       params: { globs: [ "" ] }
       trigger: true
-      attempts: 3
     - get: tile-config-generator
       params: { globs: ["*linux*"] }
       trigger: true
-      attempts: 3
     - get: cf-mgmt
       params: { globs: ["cf-mgmt*-linux"] }
       trigger: true
-      attempts: 3
     - get: bbr
       params: { globs: ["*linux-amd64*"] }
       trigger: true
-      attempts: 3
     - get: credhub-cli
       params: { globs: [ "*linux*" ] }
       trigger: true
-      attempts: 3
     - get: uaa-cli
       params: { globs: [ "*linux-amd64*" ] }
       trigger: true
-      attempts: 3
     - get: carvel-ytt-cli
       params: { globs: [ "*linux-amd64*" ] }
       trigger: true
-      attempts: 3
     - get: carvel-kapp-cli
       params: { globs: [ "*linux-amd64*" ] }
       trigger: true
-      attempts: 3
     - get: dnscontrol-cli
       params: { globs: [ "*-Linux*" ] }
       trigger: true
-      attempts: 3
     - get: yasak-cli
       params: { globs: [ "*linux-amd64*" ] }
       trigger: true
-      attempts: 3
     - get: vars-to-credhub-cli
       params: { globs: [ "*linux-amd64*" ] }
       trigger: true
-      attempts: 3
 
   - task: prepare-workspace
-    attempts: 3
     image: cflinuxfs4-image
     config:
       platform: linux
@@ -423,7 +400,6 @@ jobs:
           cp dockerfile-repo/gk-ops-image/Dockerfile workspace/
 
   - put: gk-ops-image-rc
-    attempts: 1
     inputs: detect
     params:
       load_base: cflinuxfs4-image
@@ -435,9 +411,7 @@ jobs:
   - get: gk-ops-image-rc
     trigger: true
     passed: [ build-image ]
-    attempts: 1
   - task: test-for-required-binaries
-    attempts: 3
     image: gk-ops-image-rc
     config:
       platform: linux
@@ -489,18 +463,14 @@ jobs:
     - get: gk-ops-image-rc
       passed: [ test-image ]
       trigger: true
-      attempts: 1
       params: { save: true }
     - get: image-version
-      attempts: 3
       params: { bump: patch }
   - put: gk-ops-image
-    attempts: 1
     params:
       load: gk-ops-image-rc
       tag: image-version/version
       tag_as_latest: true
   - put: image-version
-    attempts: 3
     params:
       file: image-version/version
