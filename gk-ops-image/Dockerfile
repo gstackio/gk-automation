@@ -83,7 +83,7 @@ RUN \
 \
 # UAA Client
  apt-get -y install --no-install-recommends "ruby-dev" && \
- gem install cf-uaac --no-ri --no-rdoc && \
+ gem install cf-uaac --no-document && \
 \
 # Azure Client
  apt-get -y install --no-install-recommends "apt-transport-https" "azure-cli" && \
