@@ -38,6 +38,7 @@ resources:
 
 - name: gk-ops-image
   type: docker-image # we can't migrate to 'registry-image' until we adopt the 'build-image' task
+  icon: docker
   check_every: 24h
   source:
     tag: latest
@@ -48,6 +49,7 @@ resources:
 
 - name: gk-ops-image-rc
   type: docker-image # we can't migrate to 'registry-image' until we adopt the 'build-image' task
+  icon: docker
   check_every: 24h
   source:
     tag: release-candidate
@@ -55,6 +57,7 @@ resources:
 
 - name: cflinuxfs4-image
   type: docker-image
+  icon: docker
   check_every: 24h
   source:
     repository: cloudfoundry/cflinuxfs4
@@ -64,6 +67,7 @@ resources:
 
 - name: om-cli
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: pivotal-cf
@@ -72,6 +76,7 @@ resources:
 
 - name: semver-cli # Small CLI to compare semvers written in Go
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: christianang
@@ -80,6 +85,7 @@ resources:
 
 - name: pivnet-cli
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: pivotal-cf
@@ -88,6 +94,7 @@ resources:
 
 - name: stemcell-downloader
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: pivotal-cf
@@ -96,6 +103,7 @@ resources:
 
 - name: terraform
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: hashicorp
@@ -104,6 +112,7 @@ resources:
 
 - name: jq
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: stedolan
@@ -112,6 +121,7 @@ resources:
 
 - name: spruce-cli
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: geofffranks
@@ -120,6 +130,7 @@ resources:
 
 - name: bosh-cli
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: cloudfoundry
@@ -128,6 +139,7 @@ resources:
 
 - name: yq
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: mikefarah
@@ -136,6 +148,7 @@ resources:
 
 - name: cf-cli
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: cloudfoundry
@@ -144,6 +157,7 @@ resources:
 
 - name: tile-config-generator
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: vmwarepivotallabs
@@ -152,6 +166,7 @@ resources:
 
 - name: cf-mgmt
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: vmwarepivotallabs
@@ -160,6 +175,7 @@ resources:
 
 - name: credhub-cli
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: cloudfoundry-incubator
@@ -168,6 +184,7 @@ resources:
 
 - name: bbr
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: cloudfoundry-incubator
@@ -176,6 +193,7 @@ resources:
 
 - name: uaa-cli
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: cloudfoundry-incubator
@@ -184,6 +202,7 @@ resources:
 
 - name: carvel-ytt-cli
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: vmware-tanzu
@@ -192,6 +211,7 @@ resources:
 
 - name: carvel-kapp-cli
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: vmware-tanzu
@@ -200,6 +220,7 @@ resources:
 
 - name: dnscontrol-cli
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: StackExchange
@@ -208,6 +229,7 @@ resources:
 
 - name: yasak-cli
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: gstackio
@@ -216,6 +238,7 @@ resources:
 
 - name: vars-to-credhub-cli
   type: github-release
+  icon: github
   check_every: 24h
   source:
     user: gstackio
