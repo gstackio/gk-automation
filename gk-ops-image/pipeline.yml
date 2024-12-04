@@ -376,8 +376,9 @@ jobs:
           cp carvel-ytt-cli/ytt-* workspace/ytt
           cp carvel-kapp-cli/kapp-* workspace/kapp
 
-          tar -xf dnscontrol-cli/dnscontrol_*_linux_amd64.tar.gz -C workspace/dnscontrol
-          # cp dnscontrol-cli/dnscontrol-* workspace/dnscontrol
+          tar --extract --directory="workspace" \
+              --file dnscontrol-cli/dnscontrol_*_linux_amd64.tar.gz \
+              "dnscontrol"
 
           cp yasak-cli/yasak-* workspace/yasak
 
