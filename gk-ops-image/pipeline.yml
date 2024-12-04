@@ -236,10 +236,10 @@ jobs:
       params: { globs: [ "*linux*" ] }
       trigger: true
     - get: om-cli
-      params: { globs: [ "*linux*" ] }
+      params: { globs: [ "*linux-amd64*" ] }
       trigger: true
     - get: pivnet-cli
-      params: { globs: [ "*linux*" ] }
+      params: { globs: [ "*linux-amd64*" ] }
       trigger: true
     - get: stemcell-downloader
       params: { globs: [ "*linux*" ] }
@@ -250,10 +250,10 @@ jobs:
       params: { globs: [ "*linux64*" ] }
       trigger: true
     - get: spruce-cli
-      params: { globs: [ "*linux*" ] }
+      params: { globs: [ "*linux-amd64" ] }
       trigger: true
     - get: bosh-cli
-      params: { globs: [ "*linux*" ] }
+      params: { globs: [ "*linux-amd64*" ] }
       trigger: true
     - get: yq
       params: { globs: [ "*linux_amd64*" ] }
@@ -265,13 +265,13 @@ jobs:
       params: { globs: ["*linux*"] }
       trigger: true
     - get: cf-mgmt
-      params: { globs: ["cf-mgmt*-linux"] }
+      params: { globs: ["*-linux"] }
       trigger: true
     - get: bbr
-      params: { globs: ["*linux-amd64*"] }
+      params: { globs: ["*-linux-amd64"] }
       trigger: true
     - get: credhub-cli
-      params: { globs: [ "*linux*" ] }
+      params: { globs: [ "*linux-amd64*" ] }
       trigger: true
     - get: uaa-cli
       params: { globs: [ "*linux-amd64*" ] }
@@ -283,7 +283,7 @@ jobs:
       params: { globs: [ "*linux-amd64*" ] }
       trigger: true
     - get: dnscontrol-cli
-      params: { globs: [ "*-Linux*" ] }
+      params: { globs: [ "*linux_amd64*" ] }
       trigger: true
     - get: yasak-cli
       params: { globs: [ "*linux-amd64*" ] }
@@ -326,9 +326,7 @@ jobs:
         - -c
         - |
           set -eo pipefail -x
-          cp \
-              semver-cli/semver-linux \
-              workspace/semver
+          cp semver-cli/semver-linux workspace/semver
 
           resolved_om_bin=$(
               find om-cli -type f -regextype posix-extended \
@@ -377,7 +375,8 @@ jobs:
           cp carvel-ytt-cli/ytt-* workspace/ytt
           cp carvel-kapp-cli/kapp-* workspace/kapp
 
-          cp dnscontrol-cli/dnscontrol-* workspace/dnscontrol
+          tar -xf dnscontrol-cli/dnscontrol_*_linux_amd64.tar.gz -C workspace/dnscontrol
+          # cp dnscontrol-cli/dnscontrol-* workspace/dnscontrol
 
           cp yasak-cli/yasak-* workspace/yasak
 
