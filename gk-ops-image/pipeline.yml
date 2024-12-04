@@ -232,8 +232,33 @@ jobs:
     - get: cflinuxfs4-image
       trigger: true
       params: { save: true }
-    - get: semver-cli
-      params: { globs: [ "*linux*" ] }
+
+    - get: bbr
+      params: { globs: ["*-linux-amd64"] }
+      trigger: true
+    - get: bosh-cli
+      params: { globs: [ "*linux-amd64*" ] }
+      trigger: true
+    - get: carvel-kapp-cli
+      params: { globs: [ "*linux-amd64*" ] }
+      trigger: true
+    - get: carvel-ytt-cli
+      params: { globs: [ "*linux-amd64*" ] }
+      trigger: true
+    - get: cf-cli
+      params: { globs: [ "" ] }
+      trigger: true
+    - get: cf-mgmt
+      params: { globs: ["*-linux"] }
+      trigger: true
+    - get: credhub-cli
+      params: { globs: [ "*linux-amd64*" ] }
+      trigger: true
+    - get: dnscontrol-cli
+      params: { globs: [ "*linux_amd64*" ] }
+      trigger: true
+    - get: jq
+      params: { globs: [ "*linux64*" ] }
       trigger: true
     - get: om-cli
       params: { globs: [ "*linux-amd64*" ] }
@@ -241,55 +266,31 @@ jobs:
     - get: pivnet-cli
       params: { globs: [ "*linux-amd64*" ] }
       trigger: true
+    - get: semver-cli
+      params: { globs: [ "*linux*" ] }
+      trigger: true
+    - get: spruce-cli
+      params: { globs: [ "*linux-amd64" ] }
+      trigger: true
     - get: stemcell-downloader
       params: { globs: [ "*linux*" ] }
       trigger: true
     - get: terraform
       trigger: true
-    - get: jq
-      params: { globs: [ "*linux64*" ] }
-      trigger: true
-    - get: spruce-cli
-      params: { globs: [ "*linux-amd64" ] }
-      trigger: true
-    - get: bosh-cli
-      params: { globs: [ "*linux-amd64*" ] }
-      trigger: true
-    - get: yq
-      params: { globs: [ "*linux_amd64*" ] }
-      trigger: true
-    - get: cf-cli
-      params: { globs: [ "" ] }
-      trigger: true
     - get: tile-config-generator
       params: { globs: ["*linux*"] }
-      trigger: true
-    - get: cf-mgmt
-      params: { globs: ["*-linux"] }
-      trigger: true
-    - get: bbr
-      params: { globs: ["*-linux-amd64"] }
-      trigger: true
-    - get: credhub-cli
-      params: { globs: [ "*linux-amd64*" ] }
       trigger: true
     - get: uaa-cli
       params: { globs: [ "*linux-amd64*" ] }
       trigger: true
-    - get: carvel-ytt-cli
+    - get: vars-to-credhub-cli
       params: { globs: [ "*linux-amd64*" ] }
-      trigger: true
-    - get: carvel-kapp-cli
-      params: { globs: [ "*linux-amd64*" ] }
-      trigger: true
-    - get: dnscontrol-cli
-      params: { globs: [ "*linux_amd64*" ] }
       trigger: true
     - get: yasak-cli
       params: { globs: [ "*linux-amd64*" ] }
       trigger: true
-    - get: vars-to-credhub-cli
-      params: { globs: [ "*linux-amd64*" ] }
+    - get: yq
+      params: { globs: [ "*linux_amd64*" ] }
       trigger: true
 
   - task: prepare-workspace
