@@ -29,6 +29,7 @@ resources:
   type: git
   icon: github
   check_every: 24h
+  webhook_token: ((concourse-webhook-token))
   source:
     uri: ((git_uri))
     branch: ((git_branch))
