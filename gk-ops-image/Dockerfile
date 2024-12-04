@@ -73,29 +73,29 @@ RUN \
 \
 \
 # git-lfs
- apt-get -y install --no-install-recommends git-lfs && \
+ apt-get -qq -y install --no-install-recommends git-lfs && \
 \
 # pigz: Parallel Implementation of GZip
- apt-get -y install --no-install-recommends pigz && \
+ apt-get -qq -y install --no-install-recommends pigz && \
 \
 # vim
  ln -s /usr/bin/vim.tiny /usr/local/bin/vim && \
 \
 # UAA Client
- apt-get -y install --no-install-recommends "ruby-dev" && \
+ apt-get -qq -y install --no-install-recommends "ruby-dev" && \
  gem install cf-uaac --no-document && \
 \
 # Azure Client
- apt-get -y install --no-install-recommends "apt-transport-https" "azure-cli" && \
+ apt-get -qq -y install --no-install-recommends "apt-transport-https" "azure-cli" && \
 \
 # gcloud SDK
- apt-get -y install --no-install-recommends "google-cloud-sdk" && \
+ apt-get -qq -y install --no-install-recommends "google-cloud-sdk" && \
 \
 # envsubst
- apt-get -y install --no-install-recommends "gettext-base"
+ apt-get -qq -y install --no-install-recommends "gettext-base"
 
 # # Golang
-#  apt-get -y install --no-install-recommends "golang-1.13"
+#  apt-get -qq -y install --no-install-recommends "golang-1.13"
 
 # ENV GOROOT="/usr/lib/go-1.13"
 # ENV GOPATH="/usr/local"
