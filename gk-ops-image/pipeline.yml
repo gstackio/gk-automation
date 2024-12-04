@@ -11,6 +11,13 @@ resource_types:
     repository: pivotalcf/pivnet-resource
     tag: latest-final
 
+- name: hashicorp-release
+  type: registry-image
+  source:
+    repository: harbor.ci.gstack.io/starkandwayne/hashicorp-release-resource
+    username:   ((private_registry_username))
+    password:   ((private-registry-password))
+
 resources:
 - name: image-version
   type: semver
@@ -102,13 +109,10 @@ resources:
     access_token: ((github-access-token))
 
 - name: terraform
-  type: github-release
-  icon: github
+  type: hashicorp-release
   check_every: 24h
   source:
-    user: hashicorp
-    repository: terraform
-    access_token: ((github-access-token))
+    project: terraform
 
 - name: jq
   type: github-release
@@ -258,7 +262,7 @@ jobs:
       params: { save: true }
 
     - get: bbr
-      params: { globs: ["*-linux-amd64"] }
+      params: { globs: [ "*-linux-amd64" ] }
       trigger: true
     - get: bosh-cli
       params: { globs: [ "*linux-amd64*" ] }
@@ -300,6 +304,7 @@ jobs:
       params: { globs: [ "*linux*" ] }
       trigger: true
     - get: terraform
+      params: { regexp: linux_amd64.zip }
       trigger: true
     - get: tile-config-generator
       params: { globs: ["*linux*"] }
@@ -363,14 +368,8 @@ jobs:
           cp pivnet-cli/pivnet-linux-* workspace/pivnet
           cp stemcell-downloader/stemcell-downloader-linux workspace/stemcell-downloader
 
-          terraform_version=$(cat terraform/tag | awk '{print substr($1,2);}')
-          (
-              set -x
-              curl --silent --fail --show-error --location \
-                  --url "https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip" \
-                  --output "terraform.zip"
-          )
-          unzip -qo -d "workspace" "terraform.zip"
+          tf_ver=$( < terraform/version )
+          unzip -qo -d "workspace" terraform/terraform_${tf_ver}_linux_amd64.zip
 
           cf_cli_version=$(cat cf-cli/version)
           (
