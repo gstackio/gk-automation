@@ -14,7 +14,7 @@ resource_types:
 - name: hashicorp-release
   type: registry-image
   source:
-    repository: harbor.ci.gstack.io/starkandwayne/hashicorp-release-resource
+    repository: harbor.ci.gstack.io/cfcommunity/hashicorp-release-resource
     username:   ((private_registry_username))
     password:   ((private-registry-password))
 
